@@ -1,0 +1,78 @@
+import React, { useEffect, useRef } from "react";
+import Slider from "react-slick";
+import Arrows from "./arrows";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  fetchTestimonialsById,
+  fetchAllTestimonials,
+} from "../slices/testimonialSlice";
+
+const Reviews = ({ tour_id }) => {
+  const dispatch = useDispatch();
+  const {
+    testimonialsById,
+    allTestimonials,
+    loading,
+    error,
+  } = useSelector((state) => state.testimonials);
+
+  useEffect(() => {
+    if (tour_id) {
+      dispatch(fetchTestimonialsById(tour_id)); 
+    } else {
+      dispatch(fetchAllTestimonials());
+    }
+  }, [dispatch, tour_id]);
+
+  const sliderRef = useRef(null);
+
+  const settings = {
+    dots: true,
+    infinite: false,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 3,
+    responsive: [
+      { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 2 } },
+      { breakpoint: 600, settings: { slidesToShow: 1, slidesToScroll: 1 } },
+    ],
+  };
+
+  const onClickLeft = () => sliderRef.current?.slickPrev();
+  const onClickRight = () => sliderRef.current?.slickNext();
+
+  if (loading) return <p>Loading testimonials...</p>;
+  if (error) return <p>Error loading testimonials: {error}</p>;
+
+  const testimonials = tour_id ? testimonialsById : allTestimonials;
+
+  return (
+    <>
+      <section className="carousel_title">
+        <h2>
+          <strong>
+            {tour_id ? "Happy Customers Say" : "Happy Customers Say"}
+          </strong>
+        </h2>
+        <Arrows onClickLeft={onClickLeft} onClickRight={onClickRight} />
+      </section>
+
+      <section className="testimonials_viewport">
+        {Array.isArray(testimonials) && testimonials.length > 0 ? (
+          <Slider ref={sliderRef} {...settings}>
+            {testimonials.map((t) => (
+              <section className="testimonial_container" key={t.tour_id}>
+                <h3 className="name">{t.reviewer_name}</h3>
+                <p className="review">{t.comment}</p>
+              </section>
+            ))}
+          </Slider>
+        ) : (
+          <p>No testimonials yet.</p>
+        )}
+      </section>
+    </>
+  );
+};
+
+export default Reviews;
