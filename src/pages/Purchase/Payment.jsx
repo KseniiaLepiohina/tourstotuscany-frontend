@@ -8,28 +8,19 @@ import paypal from "../../assets/home/icons/Tours/paypal.svg";
 import ProgressBar from "../../components/ProgressBar";
 import TicketOverview from "../../components/TicketOverview";
 import getTypeCard from "../../utils/CardType";
-import {setPaymentMethod,setCardValue} from "../../slices/paymentSlice";
+import {setPaymentMethod,setCardValue, setPaymentType, setValidation} from "../../slices/paymentSlice";
 import { Icon } from "@iconify/react";
 import { NavLink } from "react-router-dom";
 
 export default function Payment({ ticket }) {
   const dispatch = useDispatch();
-  const [selectedMethod, setSelectedMethod] = useState("");
-const cardValue = useSelector((state)=>state.payment.cardValue);
-  const handlePaymentMethodChange = (method) => {
-    setSelectedMethod(method);
 
-    if (method === "PayPal") {
-      dispatch(setPaymentMethod({ type: "PayPal", img: paypal }));
-    } else if (method === "Card") {
-      dispatch(setPaymentMethod({ type: "Card", img: null }));
-    }
-  };
+const { method, isValid, cardValue, cardType } =
+  useSelector(state => state.payment);
+
 
   const handleInputChange = (e) => {
     const value = e.target.value.replace(/(\d{4})(?=\d)/g, "$1 ");
-   dispatch(setCardValue(value))
-
     const typeCard = getTypeCard(value);
     if (typeCard) {
       let img = null;
@@ -37,13 +28,22 @@ const cardValue = useSelector((state)=>state.payment.cardValue);
       if (typeCard === "mastercard") img = mastercard;
       if (typeCard === "discover") img = discover;
       if (typeCard === "maestro") img = maestro;
-
       dispatch(setPaymentMethod({ type: typeCard, img }));
+      dispatch(setPaymentType(typeCard));
+      dispatch(setValidation(true));
     } else {
       dispatch(setPaymentMethod({type:"", img:null}));
+      dispatch(setPaymentType(null));
+      dispatch(setValidation(false));
       return;
     }
   };
+
+  const handleConfirm = async()=> {
+  dispatch(setPaymentMethod("card"));
+  dispatch(setPaymentType());
+
+  }
 
   return (
     <>
@@ -57,8 +57,11 @@ const cardValue = useSelector((state)=>state.payment.cardValue);
               <input
                 type="radio"
                 name="payment"
-                checked={selectedMethod === "PayPal"}
-                onChange={() => handlePaymentMethodChange("PayPal")}
+                checked={method === "PayPal"}
+                 onChange={() => {
+    dispatch(setPaymentMethod("paypal"));
+    dispatch(setValidation(true));
+  }}
               />
               <h3>PayPal</h3>
               <p>
@@ -76,8 +79,11 @@ const cardValue = useSelector((state)=>state.payment.cardValue);
 
                   type="radio"
                   name="payment"
-                  checked={selectedMethod === "Card"}
-                  onChange={() => handlePaymentMethodChange("Card")}
+                  checked={method === "Card"}
+                  onChange={() => {
+                    dispatch(setPaymentMethod("card"));
+                    dispatch(setValidation(false));
+                  }}
                 />
                 <h3>Pay with Credit Card</h3>
                 <section className="payment">
@@ -88,7 +94,7 @@ const cardValue = useSelector((state)=>state.payment.cardValue);
                 </section>
               </section>
 
-              {selectedMethod === "Card" && (
+              {method === "Card" && (
                 <section className="payment_card">
                   <fieldset>
                     <legend>Card number</legend>
@@ -113,9 +119,9 @@ const cardValue = useSelector((state)=>state.payment.cardValue);
             </section>
           </section>
         </section>
-        <NavLink to="/OrderCompleted">
-        <TicketOverview />
-         </NavLink>
+        <TicketOverview
+        onConfirm = {handleConfirm}
+        />
       </section>
     </>
   );

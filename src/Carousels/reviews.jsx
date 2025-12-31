@@ -1,14 +1,18 @@
-import React, { useEffect, useRef } from "react";
-import Slider from "react-slick";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Arrows from "./arrows";
-import { useSelector, useDispatch } from "react-redux";
 import {
   fetchTestimonialsById,
   fetchAllTestimonials,
 } from "../slices/testimonialSlice";
 
-const Reviews = ({ tour_id }) => {
+const Reviews = ({tour_id}) => {
   const dispatch = useDispatch();
+  const [slide,setSlide] = useState(0);
+  const [slidesPerView,setSlidesPerView] = useState(2);
+
+
   const {
     testimonialsById,
     allTestimonials,
@@ -18,58 +22,68 @@ const Reviews = ({ tour_id }) => {
 
   useEffect(() => {
     if (tour_id) {
-      dispatch(fetchTestimonialsById(tour_id)); 
+      dispatch(fetchTestimonialsById(tour_id));
     } else {
       dispatch(fetchAllTestimonials());
     }
   }, [dispatch, tour_id]);
-
-  const sliderRef = useRef(null);
-
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 2 } },
-      { breakpoint: 600, settings: { slidesToShow: 1, slidesToScroll: 1 } },
-    ],
+//resize
+useEffect(()=> {
+  const handleResize = () => {
+    setSlidesPerView(window.innerWidth <=768? 1:2);
   };
-
-  const onClickLeft = () => sliderRef.current?.slickPrev();
-  const onClickRight = () => sliderRef.current?.slickNext();
+  handleResize();
+  window.addEventListener("resize",handleResize);
+  return () => window.removeEventListener("resize", handleResize);
+},[])
 
   if (loading) return <p>Loading testimonials...</p>;
   if (error) return <p>Error loading testimonials: {error}</p>;
 
   const testimonials = tour_id ? testimonialsById : allTestimonials;
+const totalSlides = Math.ceil(testimonials.length /slidesPerView);
+
+const handleNextReview = () => {
+  setSlide(prev =>
+    Math.min(prev + slidesPerView, testimonials.length - slidesPerView)
+  );
+};
+
+const handlePrevReview = () => {
+  setSlide(prev => Math.max(prev - slidesPerView, 0));
+};
 
   return (
     <>
       <section className="carousel_title">
         <h2>
-          <strong>
-            {tour_id ? "Happy Customers Say" : "Happy Customers Say"}
-          </strong>
+          <strong>Happy Customers Say</strong>
         </h2>
-        <Arrows onClickLeft={onClickLeft} onClickRight={onClickRight} />
+        <Arrows 
+        onClickLeft={handlePrevReview}
+        onClickRight={handleNextReview}
+        />
       </section>
 
       <section className="testimonials_viewport">
-        {Array.isArray(testimonials) && testimonials.length > 0 ? (
-          <Slider ref={sliderRef} {...settings}>
-            {testimonials.map((t) => (
-              <section className="testimonial_container" key={t.tour_id}>
-                <h3 className="name">{t.reviewer_name}</h3>
-                <p className="review">{t.comment}</p>
-              </section>
-            ))}
-          </Slider>
+        <section
+            className="testimonials_track"
+
+        style={{
+      transform: `translateX(-${(slide * 100) / slidesPerView}%)`,
+    }}
+>
+        {testimonials && testimonials.length > 0 ? (
+          testimonials.map((t ) => (
+            <section className="testimonial_container" key={t.id || t.tour_id}>
+              <h3 className="name">{t.reviewer_name}</h3>
+              <p className="review">{t.comment}</p>
+            </section>
+          ))
         ) : (
           <p>No testimonials yet.</p>
         )}
+        </section>
       </section>
     </>
   );

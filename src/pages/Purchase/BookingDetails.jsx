@@ -37,6 +37,7 @@ export default function BookingDetails() {
   const adultValue = useSelector((state)=> state.tour.adultValue);
   const childValue = useSelector((state)=> state.tour.childValue);
   const infantValue = useSelector((state)=> state.tour.infantValue);
+const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
 
 
     if (loading) return <p>Loading...</p>;
@@ -137,7 +138,11 @@ export default function BookingDetails() {
                 />
               </section>
             </section>
-            <TicketOverview nextLink="/User" />
+            <TicketOverview 
+            ableConfirm={true}
+            nextLink="/User"
+            
+            />
           </section>
         </section>
     </>

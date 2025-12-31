@@ -30,7 +30,7 @@ const fetchToursSlice = createSlice({
       .addCase(fetchTours.fulfilled,(state,action)=> {
         state.loading = false;
         state.tours = action.payload;
-        if(action.payload.length>0){
+        if(action.payload.length > 0){
           state.mainImg  = action.payload[0].mainImg;
         }
       })

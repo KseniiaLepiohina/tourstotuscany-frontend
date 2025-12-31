@@ -17,7 +17,7 @@ const store = configureStore({
         testimonials :testimonialsByIdReducer,
         booking:bookingReducer,
         tickets:paymentReducer,
-        // payment: paymentReducer,
+        payment: paymentReducer,
     },
 });
 
