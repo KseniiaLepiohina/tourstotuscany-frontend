@@ -10,6 +10,7 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.13.2",
+    "baseline-browser-mapping": "^2.9.11",
     "firebase": "^12.4.0",
     "iconify": "^1.4.0",
     "photoswipe": "^5.4.4",

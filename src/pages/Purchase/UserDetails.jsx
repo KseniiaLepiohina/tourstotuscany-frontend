@@ -65,9 +65,12 @@ const email = useSelector((state)=> state.auth.email);
                 </section>
             </form>
             </section>
-            <Link to="/Payment">
-                <TicketOverview/>
-                </Link>
+            
+                <TicketOverview
+                 ableConfirm={true}
+            nextLink="/Payment"
+                />
+            
     </section>
     </>
     )

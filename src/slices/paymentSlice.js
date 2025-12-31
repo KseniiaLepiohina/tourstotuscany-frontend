@@ -4,22 +4,28 @@ import { createSlice } from '@reduxjs/toolkit';
 const ticketPayment = createSlice({
   name: "payment",
   initialState: {
-    cardValue: "",
-    paymentType: "",
+    method:null,
+    paymentType: null,
+    isValid:false,
+    status:"idle",
     paymentImg:null,
 
   },
   reducers: {
     setPaymentMethod: (state, action) => {
-      const {type,img} = action.payload;
-      state.paymentType = type;
-      state.paymentImg = img;
+      state.method = action.payload;
     },
-    setCardValue :(state,action)=> {
-      state.cardValue = action.payload;
+    setPaymentType:(state,action)=> {
+      state.paymentType = action.payload;
+    },
+    setValidation:(state,action)=> {
+      state.isValid = action.payload;
+    },
+    setStatus:(state,action)=> {
+      state.status = action.payload;
+    },
 
-    }
   }
 })
-export const { setPaymentMethod,setCardValue } = ticketPayment.actions;
+export const { setPaymentMethod,setPaymentType,setValidation,setStatus } = ticketPayment.actions;
 export default ticketPayment.reducer;
