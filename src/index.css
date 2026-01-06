@@ -286,7 +286,8 @@ box-shadow:0.25em 0.25em  #EFEFEF ;
   font-size: 48px;
 }
 
-.container_package sup sub{
+.container_package sup,
+.contact-container sub{
   font-family: var(--base-font);
   color: #333333;
 }
@@ -294,7 +295,7 @@ box-shadow:0.25em 0.25em  #EFEFEF ;
 .container_package button{
   background-color: #ffffff;
   color: #f78b42;
-  border: #FA8B02 solid ;
+  border: #FA8B02 solid;
   padding: 0.75em  0.5em ;
   border-radius: 3.125em;
   cursor: pointer;
