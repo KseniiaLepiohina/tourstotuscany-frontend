@@ -3,7 +3,7 @@
 
 :root {
   --primary-font: 'Pacifico', cursive;
-  --base-font: 'Open-Sans'
+  --base-font: 'Open-Sans';
     --base-font-size:3em;
 
   .logo {
