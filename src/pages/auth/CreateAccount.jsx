@@ -4,7 +4,6 @@ import { createPortal } from "react-dom";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmail, setPassword, setFullName, registerUser } from "../../slices/authSlice";
-import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function CreateAccount({ isOpen, onClose }) {
   const dispatch = useDispatch();

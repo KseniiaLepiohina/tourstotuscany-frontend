@@ -11,7 +11,6 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.13.2",
     "baseline-browser-mapping": "^2.9.11",
-    "firebase": "^12.4.0",
     "iconify": "^1.4.0",
     "photoswipe": "^5.4.4",
     "react": "^19.2.0",
@@ -19,8 +18,7 @@
     "react-leaflet": "^5.0.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.4",
-    "react-scripts": "5.0.1",
-    "react-slick": "^0.31.0",
+    "react-scripts": "^5.0.1",
     "react-toastify": "^11.0.5",
     "web-vitals": "^2.1.4"
   },
@@ -28,7 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts  eject"
   },
   "eslintConfig": {
     "extends": [
