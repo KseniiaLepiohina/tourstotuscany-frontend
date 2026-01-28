@@ -1,12 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+
+const API = process.env.API;
 export const fetchTestimonialsById = createAsyncThunk(
   "testimonials/byId",
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/testimonials/${id}`
+        `${API}/testimonials/${id}`
       );
       return response.data;
     } catch (error) {
@@ -22,7 +24,7 @@ export const fetchAllTestimonials = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/testimonials/allTestimonials`
+        `${API}/testimonials/allTestimonials`
       );
       return response.data;
     } catch (error) {

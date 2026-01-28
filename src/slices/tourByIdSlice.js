@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+const API = process.env.API;
+
 export const fetchTourById = createAsyncThunk(
   "tour/fetchTourById",
   async (id) => {
     try {
-      const response = await axios.get(`http://localhost:5000/tour/${id}`);
+      const response = await axios.get(`${API}/tour/${id}`);
       return response.data;
     } catch (error) {
       return (error.response.data || error.message || "Something went wrong");
@@ -17,7 +19,7 @@ export const findMainImg = createAsyncThunk(
   async (id, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `http://localhost:5000/main-gallery/main_img/${id}`
+        `${API}/main-gallery/main_img/${id}`
       );
 
       return { id, url: response.data.image_main_url };
