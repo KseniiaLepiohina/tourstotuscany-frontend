@@ -1,14 +1,14 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query'
-
 import axios from 'axios';
+
+const API = process.env.API;
 
 export const createAccount = createAsyncThunk(
   "auth/signUp",
   async(credentials,{rejectWithValue}) => {
     try{
       const { fullName, email, password } = credentials;
-      const response = await axios.post(`http://localhost:5000/users/newUser/${encodeURIComponent(fullName)}/${encodeURIComponent(email)}/${encodeURIComponent(password)}`);
+      const response = await axios.post(`${API}/users/newUser/${encodeURIComponent(fullName)}/${encodeURIComponent(email)}/${encodeURIComponent(password)}`);
       return response.data;
     }catch(error){
      return  rejectWithValue(error.response.data || "Auth error");
