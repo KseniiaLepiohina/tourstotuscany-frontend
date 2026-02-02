@@ -1,21 +1,19 @@
-import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import visa from "../../assets/home/icons/Tours/visa.svg";
 import discover from "../../assets/home/icons/Tours/discover.svg";
 import maestro from "../../assets/home/icons/Tours/maestro.svg";
 import mastercard from "../../assets/home/icons/Tours/mastercard.svg";
-import paypal from "../../assets/home/icons/Tours/paypal.svg";
+// import paypal from "../../assets/home/icons/Tours/paypal.svg";
 import ProgressBar from "../../components/ProgressBar";
 import TicketOverview from "../../components/TicketOverview";
 import getTypeCard from "../../utils/CardType";
-import {setPaymentMethod,setCardValue, setPaymentType, setValidation} from "../../slices/paymentSlice";
+import {setPaymentMethod, setPaymentType, setValidation} from "../../slices/paymentSlice";
 import { Icon } from "@iconify/react";
-import { NavLink } from "react-router-dom";
 
 export default function Payment({ ticket }) {
   const dispatch = useDispatch();
 
-const { method, isValid, cardValue, cardType } =
+const { method, cardValue } =
   useSelector(state => state.payment);
 
 

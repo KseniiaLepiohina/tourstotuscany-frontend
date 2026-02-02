@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon } from '@iconify/react/dist/iconify.js';
 
 const Arrows = (props) => {
-  const { className, style, onClickLeft,onClickRight } = props;
+  const { className, onClickLeft,onClickRight } = props;
 
   return (
     <section className={className}>

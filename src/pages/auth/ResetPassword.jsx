@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Login from "./Login";
 import CheckEmail from "./CheckEmail";
@@ -7,8 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {setEmail} from "../../slices/authSlice";
 import { toast } from "react-toastify";
 
-export default function ResetPassword() {
-const [isOpen, setIsOpen] = useState(true);
+export default function ResetPassword({isOpen}) {
+// const [isOpen, setIsOpen] = useState(true);
   const dispatch = useDispatch();
 const {email,loading,error,success}=useSelector((state)=> state.auth);
 

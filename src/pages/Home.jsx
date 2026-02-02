@@ -18,7 +18,6 @@ import Statistic from "../components/statistic.jsx";
 
 import TuscanySlider from "../Carousels/tourPackages.jsx";
 import Reviews from "../Carousels/reviews.jsx";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import TourPanel from "../components/TourPanel.jsx";
 import oneday from '../assets/svgs/One_day.svg';
 import map from '../assets/svgs/Map.svg';

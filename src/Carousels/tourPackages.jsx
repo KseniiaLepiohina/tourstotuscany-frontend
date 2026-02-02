@@ -6,9 +6,7 @@ import Arrows from "./arrows";
 
 const ToursList = () => {
   const dispatch = useDispatch();
-  const { tours = [], loading, error, mainImg } = useSelector(
-    (state) => state.fetchAvaliableTours || {}
-  );
+  const { tours = [], loading, error, mainImg } = useSelector((state) => state.fetchAvaliableTours || {});
 
   const [slide, setSlide] = useState(0);
   const [slidesPerView, setSlidesPerView] = useState(4);

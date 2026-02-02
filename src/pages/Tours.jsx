@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import clndr from '../assets/home/icons/Tours/clndr_orng.svg';
 import ppl from '../assets/home/icons/Tours/group_col.svg';
-import arrow from '../assets/home/icons/Tours/arrow-right.svg';
 import BookBike from '../components/bookBike';
-import Testimonials from '../Carousels/reviews';
-// import SpecificTour from '../pages/SpecificTour';
+import Reviews from '../Carousels/reviews';
 import axios from 'axios';
-import Reviews from "../Carousels/reviews";
 import { useDispatch, useSelector } from "react-redux";
 import { findMainImg } from "../slices/tourByIdSlice";
 
@@ -17,7 +14,6 @@ export default function Tours() {
 const dispatch = useDispatch();
 
   const [tours, setTours] = useState([]);
-  // const [mainImg, setMainImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 

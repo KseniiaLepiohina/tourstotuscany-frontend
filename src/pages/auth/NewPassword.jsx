@@ -1,22 +1,20 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import  { useState } from "react";
+import { Link} from "react-router-dom";
 import { Icon } from "@iconify/react";
 import Login from "./Login";
 import ApprovedPassword from "./ApprovedPassword";
 import { useDispatch, useSelector } from "react-redux";
-import { setConfirmPassword, setNewPassword, updateUserPassword } from "../../slices/authSlice";
+import { setConfirmPassword, setNewPassword } from "../../slices/authSlice";
 import { toast } from "react-toastify";
-import { createPortal } from "react-dom";
 
 
 export default function NewPassword() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { loading, error, newPassword, confirmPassword } = useSelector((state) => state.auth);
+  const { loading, newPassword, confirmPassword } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import Arrows from "./arrows";
 import {
   fetchTestimonialsById,
@@ -11,7 +10,6 @@ const Reviews = ({tour_id}) => {
   const dispatch = useDispatch();
   const [slide,setSlide] = useState(0);
   const [slidesPerView,setSlidesPerView] = useState(2);
-
 
   const {
     testimonialsById,
@@ -41,7 +39,7 @@ useEffect(()=> {
   if (error) return <p>Error loading testimonials: {error}</p>;
 
   const testimonials = tour_id ? testimonialsById : allTestimonials;
-const totalSlides = Math.ceil(testimonials.length /slidesPerView);
+// const totalSlides = Math.ceil(testimonials.length /slidesPerView);
 
 const handleNextReview = () => {
   setSlide(prev =>

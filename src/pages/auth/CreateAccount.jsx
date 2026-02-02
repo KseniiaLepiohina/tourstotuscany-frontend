@@ -1,10 +1,8 @@
 
 import React, { useState } from "react";
-import { createPortal } from "react-dom";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setPassword, setFullName, registerUser } from "../../slices/authSlice";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setEmail, setPassword, setFullName } from "../../slices/authSlice";
 
 export default function CreateAccount({ isOpen, onClose }) {
   const dispatch = useDispatch();
@@ -12,25 +10,12 @@ export default function CreateAccount({ isOpen, onClose }) {
   const [showPassword, setShowPassword] = useState(false);
 const newUser  =useSelector((state)=> state.auth.createAccount);
   if (!isOpen) return null;
-
-  // const handleSubmit = async(e) => {
-  //   e.preventDefault();
-  //   try{
-  //     const userCredential = await createUserWithEmailAndPassword(auth,email,password);
-  //     const idToken = await userCredential.user.getIdToken();
-  //     await registerUser({idToken}).unwrap();
-  //       onClose();
-  //   }catch(error) {
-  //     console.log("Error",err);
-  //   }
-  
-  // };
   const handleSubmit = async(e)=> {
     e.preventDefault();
    dispatch(newUser)
   }
 
-  return createPortal(
+  return (
     <section className="modal-overlay ">
       <section className="modal-content auth">
         <header className="modal-header">
@@ -44,7 +29,7 @@ const newUser  =useSelector((state)=> state.auth.createAccount);
           </button>
         </header>
 
-        <form  className="modal-form">
+        <form onClick={handleSubmit} className="modal-form">
           <label>Name and Surname</label>
           <input
             value={fullName}
@@ -106,7 +91,6 @@ const newUser  =useSelector((state)=> state.auth.createAccount);
           {error && <p className="error">{error}</p>}
         </form>
       </section>
-    </section>,
-    document.body
-  );
+    </section>
+  )
 }

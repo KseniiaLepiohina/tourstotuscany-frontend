@@ -1,20 +1,15 @@
-import React,{useState} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Icon from '@iconify/iconify';
-import checkemail from "../../assets/home/icons/CheckIn/check_mail.svg";
-import arrow from "../../assets/home/icons/CheckIn/grey_arrow.svg";
-import close from "../../assets/home/icons/CheckIn/window-close.svg";
 
 import Login from "./Login";
-import { createPortal } from "react-dom";
 
-export default function CheckEmail({onClose}) {
+export default function CheckEmail() {
 
-  const [isOpen, setIsOpen] = useState(true);
+  // const [isOpen, setIsOpen] = useState(true);{onClose}
   
 
   
-  return createPortal(
+  return (
    <section className="modal-overlay" >
       <section className="modal-content auth">
         <form className="modal-form" >
@@ -61,7 +56,6 @@ export default function CheckEmail({onClose}) {
           </section>
         </form>
       </section> 
-       </section>,
-    document.body
+       </section>
   );
 }

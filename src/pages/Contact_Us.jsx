@@ -9,8 +9,6 @@ export default function ContactUs() {
 const [username,setUsername] = useState('');
 const [message,setMessage] = useState('');
 
-
-
   return (
 <section> 
   <section className="contact-container">

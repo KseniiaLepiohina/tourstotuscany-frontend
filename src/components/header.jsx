@@ -1,16 +1,14 @@
-import React, { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { Icon } from "@iconify/react";
+import {useState } from "react";
+import {NavLink, useLocation } from "react-router-dom";
 import logo from "../assets/home/logo.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../slices/authSlice";
+import {useDispatch} from "react-redux";
 import CreateAccount from "../pages/auth/CreateAccount"; 
 import Login from "../pages/auth/Login";
 
 export default function Header() {
+
   const dispatch = useDispatch();
   const location = useLocation();
-   const currentUser = useSelector((state) => state.auth.currentUser);
 const [isOpen, setIsOpen] = useState(false);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
 const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -19,7 +17,6 @@ const [isLoginOpen, setIsLoginOpen] = useState(false);
   const isOverlay = overlayRoutes.includes(location.pathname);
 
 
-  
 
   return (
     <header className={`header ${isOverlay ? "overlay" : ""}`}>

@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
-import group from "../assets/home/icons/Tours/group_col.svg";
-import duration from "../assets/home/icons/Tours/duration.svg";
-import location from "../assets/home/icons/Footer/location.svg";
-import guide from "../assets/home/icons/guide.svg";
-import lang from "../assets/home/icons/Tours/language.svg";
-import fees from "../assets/home/icons/Tours/ticket.svg";
-import transport from "../assets/home/icons/Tours/transport_col.svg";
+// import group from "../assets/home/icons/Tours/group_col.svg";
+// import duration from "../assets/home/icons/Tours/duration.svg";
+// import location from "../assets/home/icons/Footer/location.svg";
+// import guide from "../assets/home/icons/guide.svg";
+// import lang from "../assets/home/icons/Tours/language.svg";
+// import fees from "../assets/home/icons/Tours/ticket.svg";
+// import transport from "../assets/home/icons/Tours/transport_col.svg";
 import { MainGallery } from "../components/MainGallery";
 import { GalleryPlaces } from "../components/GalleryPlaces";
 import Testimotionals from "../Carousels/reviews.jsx";
-import back from "../assets/home/icons/CheckIn/grey_arrow.svg";
+// import back from "../assets/home/icons/CheckIn/grey_arrow.svg";
 import TimePicker from "../Picker/TimePicker.jsx";
 import DatePicker from "../Picker/DatePicker.jsx";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -24,8 +24,9 @@ export default function SpecificTour() {
 const {id} = useParams();
   const dispatch = useDispatch();
 
-useEffect(() => {
+useEffect((id) => {
   dispatch(fetchTourById(id));
+  dispatch(findMainImg(id));
 }, [dispatch]);
 
 const {  tour, loading, error } = useSelector((state) => state.tour);
@@ -46,7 +47,7 @@ const {  tour, loading, error } = useSelector((state) => state.tour);
       </section>
 
       <section className="main_specificTour">
-        <MainGallery />
+        <MainGallery id={id}/>
         <section className="tour" key={tour.id}>
           <section className="spectTour_intro">
             <h2>{tour.title}</h2>

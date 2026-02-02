@@ -3,7 +3,7 @@ import ProgressBar from "../../components/ProgressBar";
 import { useDispatch, useSelector } from "react-redux";
 import TicketOverview from "../../components/TicketOverview";
 import { setFirstName,setLastName,setFullName,setPhone,setEmail } from "../../slices/authSlice";
-import { Link } from "react-router-dom";
+
 export default function UserDetails () {
 
 const dispatch = useDispatch();

@@ -1,5 +1,4 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit';
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query'
 
 import axios from 'axios';
 

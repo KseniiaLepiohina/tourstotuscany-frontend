@@ -1,8 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-export const fetchTours = createAsyncThunk("tour/fetchTours", async () => {
-  const response = await axios.get(`http://localhost:5000/tour/tours`);
+export const fetchTours = createAsyncThunk("tour/fetchTours", async (params) => {
+  const response = await axios.get(`http://localhost:5000/tour/tours`,{
+    params:{
+title:params.title || null,
+group_size:params.people || null,
+transport:params.transport || null
+    }
+  });
   return response.data;
 });
 export const fetchMainImg = createAsyncThunk(
@@ -17,10 +23,19 @@ const fetchToursSlice = createSlice({
   initialState : {
     tours:[],
     mainImg:null,
+    params:{
+      title:"",
+      people:"",
+      transport:""
+    },
     loading:false,
     error:null,
   },
-  reducers:{},
+  reducers:{
+    setSearchParams:(state,action)=> {
+      state.params = action.payload
+    }
+  },
   extraReducers:(builder) => {
     builder
       .addCase(fetchTours.pending,(state)=> {

@@ -1,12 +1,14 @@
 import  { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { setEmail,setPassword } from "../../slices/authSlice";
+
+
 export default function Login({ isOpen, onClose }) {
   const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
  
 const {email, password} = useSelector((state)=> state.auth);
@@ -32,7 +34,7 @@ const {email, password} = useSelector((state)=> state.auth);
           </button>
         </header>
 
-        <form  className="modal-form">
+        <form onClick={handleSubmit} className="modal-form">
           <label htmlFor="email">Email Address</label>
           <input
             id="email"

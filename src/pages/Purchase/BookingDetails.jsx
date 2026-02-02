@@ -5,23 +5,22 @@ import { fetchTourById } from "../../slices/tourByIdSlice";
 import ProgressBar from '../../components/ProgressBar';
 import TicketOverview from '../../components/TicketOverview';
 import { Icon } from "@iconify/react";
-import { selectedTime, selectedDate } from "../../slices/dateSlice";
-import {adultValue,
-    totalAdultPrice,
+// import { selectedTime, selectedDate } from "../../slices/dateSlice";
+ import {
+//adultValue,
+//totalAdultPrice,
     increaseAdultValue,
     decreaseAdultValue,
 
-    childValue,
-    totalChildPrice,
+    // childValue,
+    // totalChildPrice,
     increaseChildValue,
     decreaseChildValue,
-    infantValue,
-    totalInfantPrice,
+    // infantValue,
+    // totalInfantPrice,
     increaseInfantValue,
     decreaseInfantValue,
-
-
-    totalPrice,
+    // totalPrice,
   } from '../../slices/tourByIdSlice';
 
 export default function BookingDetails() {
@@ -56,15 +55,10 @@ const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
           : error.message || JSON.stringify(error)}
       </p>
     );
-
-
-
   return (
     <>
       <ProgressBar />
-
       <section>
-      
           <section className="booking_container">
             <section>
               <section className="selectedData">
