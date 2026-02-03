@@ -1,28 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import Slider from "react-slick";
 import Arrows from "./arrows";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchTestimonialsById,
-  fetchAllTestimonials,
-} from "../slices/testimonialSlice";
+
+import { useGetTestimonialsQuery } from "../services/tourApi";
 
 const Reviews = ({ tour_id }) => {
-  const dispatch = useDispatch();
-  const {
-    testimonialsById,
-    allTestimonials,
-    loading,
-    error,
-  } = useSelector((state) => state.testimonials);
-
-  useEffect(() => {
-    if (tour_id) {
-      dispatch(fetchTestimonialsById(tour_id)); 
-    } else {
-      dispatch(fetchAllTestimonials());
-    }
-  }, [dispatch, tour_id]);
+  const {data:testimonials,loading,error} = useGetTestimonialsQuery(tour_id) ;
 
   const sliderRef = useRef(null);
 
@@ -44,7 +27,6 @@ const Reviews = ({ tour_id }) => {
   if (loading) return <p>Loading testimonials...</p>;
   if (error) return <p>Error loading testimonials: {error}</p>;
 
-  const testimonials = tour_id ? testimonialsById : allTestimonials;
 
   return (
     <>

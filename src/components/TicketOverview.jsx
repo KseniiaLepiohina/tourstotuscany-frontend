@@ -1,38 +1,26 @@
-import React, { useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import  { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "@iconify/react";
-import { createNewBooking } from "../slices/bookingSlice";
-import { setTotalAdultPrice,setTotalChildPrice,setTotalInfantPrice,setTotalPrice } from "../slices/tourByIdSlice";
+import { useGetMainImageQuery } from "../services/tourApi";
+
+
 export default function TicketOverview({ nextLink, onNext }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
 
-  const mainImg = useSelector((state) => state.tour.mainImg);
-  const { adultValue, childValue, infantValue, totalAdultPrice, totalChildPrice, totalInfantPrice, totalPrice } =
+  const {data:image,isLoading:imgLoading} = useGetMainImageQuery(tour_id);
+
+  const { adultValue, childValue, infantValue } =
     useSelector((state) => state.tour);
 
-  const { tour, loading, error } = useSelector((state) => state.tour);
-useEffect(() => {
-  if (tour) {
-    dispatch(setTotalAdultPrice());
-    dispatch(setTotalChildPrice());
-    dispatch(setTotalInfantPrice());
-    dispatch(setTotalPrice());
-  }
-}, [adultValue, childValue, infantValue, tour, dispatch]);
+const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
+const totalChildPrice = ((tour.child_price || 0 ) * childValue );
+const totalAdultPrice = ((tour.price || 0 ) * adultValue);
+const totalInfantPrice = ((tour.infant_price || 0 ) *infantValue);
+const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
 
-  useEffect(() => {
-    // Автоматично створюємо бронювання при рендері, якщо потрібно
-    if (tour ) {
-      dispatch(createNewBooking());
-    }
-  }, [dispatch, tour]);
-
- 
-
-  if (!tour) return <p>Loading tour...</p>;
   if (loading) return <p>Creating booking...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -40,7 +28,11 @@ useEffect(() => {
     <section className="border">
       <h2>Your Tickets Overview</h2>
       <section className="ticketOverview_body">
-        <img src={mainImg?.[tour.id] || "placeholder.jpg"} alt={tour.title} width={300} height={200} />
+        <img src={image?.url|| "placeholder.jpg"} 
+        alt={tour.title} 
+        width={300} 
+        height={200} 
+        />
         <section className="ticketOverview_main">
           <h2>{tour.title}</h2>
           <section className="ticketOverview_data">

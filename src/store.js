@@ -7,11 +7,14 @@ import tourPanelReducer from './slices/panelSlice';
 import testimonialsByIdReducer from './slices/testimonialSlice';
 import paymentReducer from './slices/paymentSlice';
 import bookingReducer from './slices/bookingSlice'
+import { tourApi } from './services/tourApi';
 const store = configureStore({
     reducer: {
+        [tourApi.reducerPath]:tourApi.reducer,
+         tour: tourReducer,
         auth: authReducer,
         datepicker: datepickerReducer,
-        tour: tourReducer,
+       
         fetchTours: fetchToursReducer,
         panel: tourPanelReducer,
         testimonials :testimonialsByIdReducer,
@@ -19,6 +22,7 @@ const store = configureStore({
         tickets:paymentReducer,
         // payment: paymentReducer,
     },
+    middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(tourApi.middleware)
 });
 
 export default store;

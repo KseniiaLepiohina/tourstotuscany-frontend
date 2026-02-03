@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchTourById } from "../../slices/tourByIdSlice";
@@ -6,34 +6,21 @@ import ProgressBar from '../../components/ProgressBar';
 import TicketOverview from '../../components/TicketOverview';
 import { Icon } from "@iconify/react";
 import { selectedTime, selectedDate } from "../../slices/dateSlice";
-import {adultValue,
-    totalAdultPrice,
+import {
     increaseAdultValue,
     decreaseAdultValue,
-
-    childValue,
-    totalChildPrice,
     increaseChildValue,
     decreaseChildValue,
-    infantValue,
-    totalInfantPrice,
     increaseInfantValue,
     decreaseInfantValue,
-
-
-    totalPrice,
   } from '../../slices/tourByIdSlice';
 
 export default function BookingDetails() {
 
   const {id} = useParams();
-    const dispatch = useDispatch();
   
-  useEffect(() => {
-    dispatch(fetchTourById(id));
-  }, [dispatch]);
+  const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
   
-  const {  tour, loading, error } = useSelector((state) => state.tour);
   const adultValue = useSelector((state)=> state.tour.adultValue);
   const childValue = useSelector((state)=> state.tour.childValue);
   const infantValue = useSelector((state)=> state.tour.infantValue);
@@ -42,21 +29,6 @@ export default function BookingDetails() {
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
     if (!tour) return <p>Tour not found</p>;
-  console.log("tour",tour);
-
-  if (loading) return <p>Loading...</p>;
-
-  if (error)
-    return (
-      <p>
-        Error:{" "}
-        {typeof error === "string"
-          ? error
-          : error.message || JSON.stringify(error)}
-      </p>
-    );
-
-
 
   return (
     <>

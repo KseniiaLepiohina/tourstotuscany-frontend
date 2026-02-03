@@ -1,17 +1,9 @@
-import React, { useState, useEffect } from "react";
+import {useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
-import group from "../assets/home/icons/Tours/group_col.svg";
-import duration from "../assets/home/icons/Tours/duration.svg";
-import location from "../assets/home/icons/Footer/location.svg";
-import guide from "../assets/home/icons/guide.svg";
-import lang from "../assets/home/icons/Tours/language.svg";
-import fees from "../assets/home/icons/Tours/ticket.svg";
-import transport from "../assets/home/icons/Tours/transport_col.svg";
 import { MainGallery } from "../components/MainGallery";
 import { GalleryPlaces } from "../components/GalleryPlaces";
 import Testimotionals from "../Carousels/reviews.jsx";
-import back from "../assets/home/icons/CheckIn/grey_arrow.svg";
 import TimePicker from "../Picker/TimePicker.jsx";
 import DatePicker from "../Picker/DatePicker.jsx";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -19,20 +11,14 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Tours from "./Tours";
 import { useSelector,useDispatch } from "react-redux";
 import { fetchTourById, findMainImg } from "../slices/tourByIdSlice.js";
+import { useGetTourByIdQuery } from "../services/tourApi.js";
 
 export default function SpecificTour() {
 const {id} = useParams();
   const dispatch = useDispatch();
 
-useEffect(() => {
-  dispatch(fetchTourById(id));
-}, [dispatch]);
+const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
 
-const {  tour, loading, error } = useSelector((state) => state.tour);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-  if (!tour) return <p>Tour not found</p>;
 
   return (
     <section className="specifictour">

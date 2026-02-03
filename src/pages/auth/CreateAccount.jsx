@@ -5,31 +5,27 @@ import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmail, setPassword, setFullName, registerUser } from "../../slices/authSlice";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useSignUpMutation } from "../../services/authApi";
+import { toast } from "react-toastify";
 
 export default function CreateAccount({ isOpen, onClose }) {
+  const [signUp,{isLoading,error,isSuccess}] = useSignUpMutation();
+
   const dispatch = useDispatch();
-  const { fullName, email, password, error } = useSelector(state => state.auth);
+  const { fullName, email, password } = useSelector(state => state.auth);
+
   const [showPassword, setShowPassword] = useState(false);
 const newUser  =useSelector((state)=> state.auth.createAccount);
   if (!isOpen) return null;
-
-  // const handleSubmit = async(e) => {
-  //   e.preventDefault();
-  //   try{
-  //     const userCredential = await createUserWithEmailAndPassword(auth,email,password);
-  //     const idToken = await userCredential.user.getIdToken();
-  //     await registerUser({idToken}).unwrap();
-  //       onClose();
-  //   }catch(error) {
-  //     console.log("Error",err);
-  //   }
-  
-  // };
-  const handleSubmit = async(e)=> {
+  const handleSubmit = async(e) => {
     e.preventDefault();
-   dispatch(newUser)
+    try{
+      await signUp({fullName, email, password}).unwrap();
+      onClose();
+    }catch(error) {
+      toast.error("Check the sign up form");
+    }
   }
-
   return createPortal(
     <section className="modal-overlay ">
       <section className="modal-content auth">
@@ -44,7 +40,7 @@ const newUser  =useSelector((state)=> state.auth.createAccount);
           </button>
         </header>
 
-        <form  className="modal-form">
+        <form onSubmit={handleSubmit}  className="modal-form">
           <label>Name and Surname</label>
           <input
             value={fullName}

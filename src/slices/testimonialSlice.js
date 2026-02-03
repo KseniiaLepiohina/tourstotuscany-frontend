@@ -1,11 +1,13 @@
 import { createAsyncThunk,createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
+const API = process.env.API;
+
 export const fetchTestimonialsById = createAsyncThunk(
   "testimonials/testimonialsById",
   async(id) => {
     try{
-      const response = await axios.get(`http://localhost:5000/testimonials/${id}`);
+      const response = await axios.get(`${API}/testimonials/${id}`);
       return response.data;
     }catch(error) {
       return (error.response.data || error.message || "Something went wrong");
@@ -16,7 +18,7 @@ export const fetchAllTestimonials = createAsyncThunk(
   "testimonials/allTestimonials",
   async()=> {
     try{
-      const response = await axios.get(`http://localhost:5000/testimonials/allTestimonials`)
+      const response = await axios.get(`${API}/testimonials/allTestimonials`)
     }catch(error) {
       return (error.response.data || error.message || "Something went wrong");
     }

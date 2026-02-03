@@ -4,7 +4,10 @@ import { Icon } from '@iconify/react';
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { setEmail,setPassword } from "../../slices/authSlice";
+import { useSignInMutation } from "../../services/authApi";
 export default function Login({ isOpen, onClose }) {
+  const [signIn,{isLoading, error, isSuccess}] = useSignInMutation();
+
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -12,14 +15,17 @@ export default function Login({ isOpen, onClose }) {
 const {email, password} = useSelector((state)=> state.auth);
   if (!isOpen) return null;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !password) {
+    try{
+      await signIn({email,password}).unwrap();
+toast.success("User logged in successfully");
+    }catch(error) {
+ if (!email || !password) {
       toast.error("Please, fill in all fields");
       return;
     }
-    toast.success("User logged in successfully");
-    dispatch(email,password);
+    }
   };
 
   return (

@@ -7,19 +7,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { setConfirmPassword, setNewPassword, updateUserPassword } from "../../slices/authSlice";
 import { toast } from "react-toastify";
 import { createPortal } from "react-dom";
+import { useUpdatePasswordMutatiton } from "../../services/authApi";
 
 
 export default function NewPassword() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { loading, error, newPassword, confirmPassword } = useSelector((state) => state.auth);
+  const { loading, newPassword, confirmPassword } = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const [updatePassword, { isLoading, error, isSuccess }] = useUpdatePasswordMutatiton();
+  
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    try {
+await updatePassword({confirmPassword,newPassword}).unwrap();
+toast.success("Password succesfully updated");
+    } catch (error) {
+toast.error("Check the passwords")
+    }
     if (newPassword !== confirmPassword) {
       toast.error("Password do not match");
       return
@@ -28,7 +37,7 @@ export default function NewPassword() {
       toast.error("Password must be at least 6 characters");
       return;
     }
-    dispatch(newPassword);
+    
   }
 
   return (
@@ -38,7 +47,7 @@ export default function NewPassword() {
           <Icon
             aria-label="reset password"
             icon="bx:key"
-           color="#FA8B02"
+            color="#FA8B02"
             className="enter new password"
             width={24}
             height={24}
@@ -123,11 +132,11 @@ export default function NewPassword() {
                   gap: "0.4em",
                 }}
               >
-                 <Icon
-               icon="bi:arrow-right"
-               height="20"
-               width="20"
-               />
+                <Icon
+                  icon="bi:arrow-right"
+                  height="20"
+                  width="20"
+                />
                 <span color="#333333">Back to Login</span>
               </button>
             </Link>

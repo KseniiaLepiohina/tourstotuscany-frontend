@@ -1,11 +1,6 @@
-import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import BookingDetails from "../pages/Purchase/BookingDetails";
-import User from "../../src/pages/Purchase/UserDetails";
-import Payment from "../pages/Purchase/Payment";
+import { useLocation } from "react-router-dom";
 
 export default function ProgressBar() {
-  // const [currentStep, setCurrentStep] = useState(1);
   const location = useLocation();
   let currentStep = 1;
   if(location.pathname.includes("booking")) currentStep = 1;

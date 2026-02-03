@@ -6,19 +6,20 @@ import {Icon} from '@iconify/react';
 import { useDispatch, useSelector } from "react-redux";
 import {setEmail} from "../../slices/authSlice";
 import { toast } from "react-toastify";
+import { useForgotPasswordMutation } from "../../services/authApi";
 
 export default function ResetPassword() {
 const [isOpen, setIsOpen] = useState(true);
   const dispatch = useDispatch();
-const {email,loading,error,success}=useSelector((state)=> state.auth);
-
-  const handleSubmit = (e)=> {
+const {email,loading,success}=useSelector((state)=> state.auth);
+const [forgotPassword,{error,isLoading,isSuccess}] = useForgotPasswordMutation();
+  const handleSubmit = async(e)=> {
     e.preventDefault();
-    dispatch(email);
-     if(error) {
-    toast.error('Check email field'|| error)
-  }else{
-    toast.success(success);
+    try{
+      await forgotPassword({email}).unwrap();
+      toast.success(success);
+    }catch(error) {
+ toast.error('Check email field'|| error)
   }
   }
  
