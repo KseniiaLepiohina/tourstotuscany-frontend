@@ -1,20 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import { useGetMainImageQuery,useGetTourByIdQuery } from "../services/tourApi";
 
 
 export default function TicketOverview({ nextLink, onNext }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
 
-  const {data:image,isLoading:imgLoading} = useGetMainImageQuery(tour.id);
+  const {data:image} = useGetMainImageQuery(tour.id);
 
   const { adultValue, childValue, infantValue } =
     useSelector((state) => state.tour);
 
-const {data :tour,isLoading:loading,isError:error} = useGetTourByIdQuery();
+const {data :tour, isLoading:loading,isError:error} = useGetTourByIdQuery();
+
 const totalChildPrice = ((tour.child_price || 0 ) * childValue );
 const totalAdultPrice = ((tour.price || 0 ) * adultValue);
 const totalInfantPrice = ((tour.infant_price || 0 ) *infantValue);

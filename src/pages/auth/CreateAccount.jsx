@@ -14,7 +14,6 @@ export default function CreateAccount({ isOpen, onClose }) {
   const { fullName, email, password } = useSelector(state => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
-const newUser  =useSelector((state)=> state.auth.createAccount);
   if (!isOpen) return null;
   const handleSubmit = async (e) => {
     e.preventDefault();

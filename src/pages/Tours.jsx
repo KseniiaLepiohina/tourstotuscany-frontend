@@ -1,21 +1,15 @@
-import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import clndr from '../assets/home/icons/Tours/clndr_orng.svg';
 import ppl from '../assets/home/icons/Tours/group_col.svg';
-import arrow from '../assets/home/icons/Tours/arrow-right.svg';
 import BookBike from '../components/bookBike';
-import Testimonials from '../Carousels/reviews';
-import axios from 'axios';
 import Reviews from "../Carousels/reviews";
-import { useDispatch, useSelector } from "react-redux";
 import { useGetAllToursQuery, useGetMainImageQuery } from "../services/tourApi";
 
 
 export default function Tours() {
-const dispatch = useDispatch();
 
-const { data: tours, isLoading, error, isSuccess } = useGetAllToursQuery();
+const { data: tours } = useGetAllToursQuery();
 const { data: mainImg } = useGetMainImageQuery();
   return (
     <section>
