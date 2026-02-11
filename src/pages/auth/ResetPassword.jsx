@@ -1,75 +1,60 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import Login from "./Login";
 import CheckEmail from "./CheckEmail";
 import {Icon} from '@iconify/react';
 import { useDispatch, useSelector } from "react-redux";
 import {setEmail} from "../../slices/authSlice";
 import { toast } from "react-toastify";
+import { useForgotPasswordMutation } from "../../services/authApi";
 
 export default function ResetPassword() {
-const [isOpen, setIsOpen] = useState(true);
+  const navigate = useNavigate(); // Додайте це
   const dispatch = useDispatch();
-const {email,loading,error,success}=useSelector((state)=> state.auth);
+  const { email } = useSelector((state) => state.auth);
+const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
-  const handleSubmit = (e)=> {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(email);
-     if(error) {
-    toast.error('Check email field'|| error)
-  }else{
-    toast.success(success);
-  }
-  }
- 
+    try {
+      await forgotPassword({ email }).unwrap();
+      toast.success("Instructions sent to your email!");
+      navigate("/auth/checkemail"); // Перехід ТІЛЬКИ після успіху
+    } catch (err) {
+      toast.error(err.data?.message || "Check email field");
+    }
+  };
 
   return (
     <section className="modal">
-       {isOpen && (
-
       <section className="auth">
-        <form
-          onSubmit={handleSubmit}>
-          <Icon
-          aria-label="reset password"
-          icon="bx:key"
-          className="form_img"
-           width={24}
-           height={24}
-          />
-          <h1>Forgot Password</h1>
-          <h4>No worries, we'll send you reset instructions.</h4>
-
-          <label for="email">Email Address</label>
+        <form onSubmit={handleSubmit}>
+          {/* ... заголовок та іконка ... */}
+          <label htmlFor="email">Email Address</label>
           <input
+            id="email"
             type="email"
             value={email}
-            onChange={(e)=> dispatch(setEmail(e.target.value))}
+            onChange={(e) => dispatch(setEmail(e.target.value))}
             placeholder="Enter your email address"
             required
           />
-          <Link to="/auth/checkemail" element={<CheckEmail />}>
-            <button className="general_btn" type="submit">
-            {loading ? "Sending..." : "Reset Password"}
-            </button>
-          </Link>
+          
+          {/* ВИПРАВЛЕНО: Прибрали <Link>, залишили тільки кнопку */}
+          <button className="general_btn" type="submit" disabled={isLoading}>
+            {isLoading ? "Sending..." : "Reset Password"}
+          </button>
+
           <section>
-            <Link to="/auth/login" element={<Login />}>
-              <button 
-                style={{backgroundColor:'transparent',border:'none',display:'flex',alignItems:'center',gap:'0.4em'}}>
-                             <Icon
-                              icon="bi:arrow-right"
-                              height="20"
-                              width="20"
-                              />
-                <span color="#333333">Back to Login
-                </span>
+            <Link to="/auth/login">
+              <button type="button" style={{ background: 'transparent', border: 'none' }}>
+                <Icon icon="bi:arrow-left" width="20" /> {/* Змінив на arrow-left для логіки */}
+                <span>Back to Login</span>
               </button>
             </Link>
           </section>
         </form>
       </section>
-       )} 
     </section>
   );
 }

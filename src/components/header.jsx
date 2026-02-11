@@ -1,28 +1,21 @@
-import React, { useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import { Icon } from "@iconify/react";
+import { useState } from "react";
+import {  NavLink, useLocation } from "react-router-dom";
 import logo from "../assets/home/logo.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { logoutUser } from "../slices/authSlice";
 import CreateAccount from "../pages/auth/CreateAccount"; 
 import Login from "../pages/auth/Login";
 
 export default function Header() {
-  const dispatch = useDispatch();
   const location = useLocation();
-   const currentUser = useSelector((state) => state.auth.currentUser);
-const [isOpen, setIsOpen] = useState(false);
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-const [isLoginOpen, setIsLoginOpen] = useState(false);
+// const [isOpen, setIsOpen] = useState(false);
+//   const [isCreateOpen, setIsCreateOpen] = useState(false);
+// const [isLoginOpen, setIsLoginOpen] = useState(false);
 
-  const overlayRoutes = ["/", "/aboutUs"];
-  const isOverlay = overlayRoutes.includes(location.pathname);
-
-
-  
+  //  const overlayRoutes = ["/", "/aboutUs"];
+  // const isOverlay = overlayRoutes.includes(location.pathname);
 
   return (
-    <header className={`header ${isOverlay ? "overlay" : ""}`}>
+    // <header className={`header ${isOverlay ? "overlay" : ""}`}>
+    <header>
       <NavLink to="/">
         <img loading="lazy"
         className="logo" 
@@ -47,9 +40,10 @@ const [isLoginOpen, setIsLoginOpen] = useState(false);
             background:"none",
             border:"none",
             cursor:'pointer'
-          }}
-          onClick={() => setIsLoginOpen(true)}>Login</button>
-          <button className="general_btn" onClick={() => setIsCreateOpen(true)}>
+          }} > Login</button>
+          {/* // onClick={() => setIsLoginOpen(true)}>Login</button>onClick={() => setIsCreateOpen(true)} */}
+          
+          <button className="general_btn" >
             Sign Up
           </button>
 
@@ -98,8 +92,8 @@ const [isLoginOpen, setIsLoginOpen] = useState(false);
           )} 
         </section>
       </section> */}
-        <CreateAccount isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} />
-        <Login isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} />
+        {/* <CreateAccount isOpen={isCreateOpen} onClose={() => setIsCreateOpen(false)} />
+        <Login isOpen={isLoginOpen} onClose={() => setIsLoginOpen(false)} /> */}
     </header>
   );
 }

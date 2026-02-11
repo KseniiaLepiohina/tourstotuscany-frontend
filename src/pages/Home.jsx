@@ -5,11 +5,8 @@ import bike from "../assets/home/service/service_bike.png";
 import guide from "../assets/home/service/service_guide.png";
 import taxi from "../assets/home/service/service_taxi.png";
 import bus from "../assets/home/service/service_bus.png";
-
 import rickshaw from "../assets/home/package/package_ricksaw.png";
-
 import bikeTour from "../assets/home/package/package_tour.png";
-
 import trips from "../assets/home/package/package_trips.png";
 import price from "../assets/home/icons/price.svg";
 
@@ -18,7 +15,6 @@ import Statistic from "../components/statistic.jsx";
 
 import TuscanySlider from "../Carousels/tourPackages.jsx";
 import Reviews from "../Carousels/reviews.jsx";
-import { Icon } from "@iconify/react/dist/iconify.js";
 import TourPanel from "../components/TourPanel.jsx";
 import oneday from '../assets/svgs/One_day.svg';
 import map from '../assets/svgs/Map.svg';

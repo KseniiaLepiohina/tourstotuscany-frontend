@@ -6,53 +6,23 @@ import ppl from '../assets/home/icons/Tours/group_col.svg';
 import arrow from '../assets/home/icons/Tours/arrow-right.svg';
 import BookBike from '../components/bookBike';
 import Testimonials from '../Carousels/reviews';
-// import SpecificTour from '../pages/SpecificTour';
 import axios from 'axios';
 import Reviews from "../Carousels/reviews";
 import { useDispatch, useSelector } from "react-redux";
-import { findMainImg } from "../slices/tourByIdSlice";
+import { useGetAllToursQuery, useGetMainImageQuery } from "../services/tourApi";
 
 
 export default function Tours() {
 const dispatch = useDispatch();
 
-  const [tours, setTours] = useState([]);
-  // const [mainImg, setMainImage] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-
-const mainImg = useSelector(state=> state.tour.mainImg);
-  useEffect(() => {
-    const fetchTours = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await axios.get('http://localhost:5000/tour/tours');
-        setTours(response.data);
-      } catch (error) {
-        setError(error.message || 'Error to set up tours');
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchTours();
-  }, []);
-  useEffect(() => {
-  if (tours.length > 0) {
-    tours.forEach(tour => dispatch(findMainImg(tour.id)));
-  }
-}, [dispatch, tours]);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
-
-console.log(tours);
+const { data: tours, isLoading, error, isSuccess } = useGetAllToursQuery();
+const { data: mainImg } = useGetMainImageQuery();
   return (
     <section>
       <h1>Tour Packages</h1>
       <section className="tours_main_container">
         {tours.map((tour) => (
-          <section className="tour" key={tour._id}>
+          <section className="tour" key={tour.id}>
            {mainImg[tour.id] && (
   <img
     className="mainImg"

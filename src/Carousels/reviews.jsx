@@ -1,78 +1,88 @@
-import React, { useEffect, useRef } from "react";
-import Slider from "react-slick";
 import Arrows from "./arrows";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchTestimonialsById,
-  fetchAllTestimonials,
-} from "../slices/testimonialSlice";
 
+import {useGetTestimonialsByIdQuery,useGetAllTestimonialsQuery} from "../services/tourApi";
+
+// const Reviews = ({ tour_id }) => {
+//   const {data:testimonials,loading,error} = useGetTestimonialsQuery(tour_id) ;
+
+//   if (loading) return <p>Loading testimonials...</p>;
+//   if (error) return <p>Error loading testimonials: {error}</p>;
+
+
+//   return (
+//     <section className="carousel_wrapper">
+//       <section className="carousel_title">
+//         <h2>
+//           <strong>
+//             {tour_id ? "Happy Customers Say" : "Happy Customers Say"}
+//           </strong>
+//         </h2>
+
+//         <Arrows />
+//       </section>
+
+//             {Array.isArray(testimonials) && testimonials.map((t) => (
+//               <section className="carousel_container" key={t.tour_id}>
+//                 <ul> 
+//                   <li><h3 className="name">{t.reviewer_name}</h3></li>
+//                   <li><p className="review">{t.comment}</p></li>
+//                 </ul>
+//               </section>
+//             ))}
+//          (
+//           <p>No testimonials yet.</p>
+//         )
+//     </section>
+//   );
+// };
+
+// export default Reviews;
 const Reviews = ({ tour_id }) => {
-  const dispatch = useDispatch();
-  const {
-    testimonialsById,
-    allTestimonials,
-    loading,
-    error,
-  } = useSelector((state) => state.testimonials);
+  // Викликаємо обидва хуки. Вони спрацюють ТІЛЬКИ якщо умова skip: false.
+  
+  // 1. Запит усіх відгуків (працює, якщо tour_id немає)
+  const { 
+    data: allData, 
+    isLoading: isAllLoading, 
+    error: allError 
+  } = useGetAllTestimonialsQuery(undefined, { skip: !!tour_id });
 
-  useEffect(() => {
-    if (tour_id) {
-      dispatch(fetchTestimonialsById(tour_id)); 
-    } else {
-      dispatch(fetchAllTestimonials());
-    }
-  }, [dispatch, tour_id]);
+  // 2. Запит за ID (працює, якщо tour_id є)
+  const { 
+    data: tourData, 
+    isLoading: isTourLoading, 
+    error: tourError 
+  } = useGetTestimonialsByIdQuery(tour_id, { skip: !tour_id });
 
-  const sliderRef = useRef(null);
+  // Об'єднуємо стани
+  const testimonials = tour_id ? tourData : allData;
+  const isLoading = tour_id ? isTourLoading : isAllLoading;
+  const error = tour_id ? tourError : allError;
 
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    responsive: [
-      { breakpoint: 1024, settings: { slidesToShow: 2, slidesToScroll: 2 } },
-      { breakpoint: 600, settings: { slidesToShow: 1, slidesToScroll: 1 } },
-    ],
-  };
-
-  const onClickLeft = () => sliderRef.current?.slickPrev();
-  const onClickRight = () => sliderRef.current?.slickNext();
-
-  if (loading) return <p>Loading testimonials...</p>;
-  if (error) return <p>Error loading testimonials: {error}</p>;
-
-  const testimonials = tour_id ? testimonialsById : allTestimonials;
+  if (isLoading) return <p>Loading testimonials...</p>;
+  
+  if (error) return <p>Error loading testimonials: {JSON.stringify(error.data)}</p>;
 
   return (
-    <>
+    <section className="carousel_wrapper">
       <section className="carousel_title">
-        <h2>
-          <strong>
-            {tour_id ? "Happy Customers Say" : "Happy Customers Say"}
-          </strong>
-        </h2>
-        <Arrows onClickLeft={onClickLeft} onClickRight={onClickRight} />
+        <h2><strong>Happy Customers Say</strong></h2>
+        <Arrows />
       </section>
 
-      <section className="testimonials_viewport">
-        {Array.isArray(testimonials) && testimonials.length > 0 ? (
-          <Slider ref={sliderRef} {...settings}>
-            {testimonials.map((t) => (
-              <section className="testimonial_container" key={t.tour_id}>
-                <h3 className="name">{t.reviewer_name}</h3>
-                <p className="review">{t.comment}</p>
-              </section>
-            ))}
-          </Slider>
-        ) : (
-          <p>No testimonials yet.</p>
-        )}
-      </section>
-    </>
+      {Array.isArray(testimonials) && testimonials.length > 0 ? (
+        testimonials.map((t) => (
+          <section className="carousel_container" key={t.id || t.tour_id}> 
+            <ul> 
+              <li><h3 className="name">{t.reviewer_name}</h3></li>
+              <li><p className="review">{t.comment}</p></li>
+            </ul>
+          </section>
+        ))
+      ) : (
+        <p>No testimonials yet.</p>
+      )}
+    </section>
   );
 };
-
-export default Reviews;
+ export default Reviews;

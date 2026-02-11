@@ -58,8 +58,9 @@ export default function BookBike() {
                 </h3>
                 <section className="custom_container_service">
                   <select>
-                    <option >
-                      Select date<img src={date} alt="select the date" />
+                 {/* <img src={date} alt="select the date" />*/}
+                <option > 
+                      Select date
                     </option>
 
                     {/* <DatePicker /> */}
@@ -71,7 +72,7 @@ export default function BookBike() {
                   <span>Time</span>
                 </h3>
                 <section className="custom_container_service">
-                  <TimePicker />
+                  {/* <TimePicker /> */}
                 </section>
               </section>
             </section>
