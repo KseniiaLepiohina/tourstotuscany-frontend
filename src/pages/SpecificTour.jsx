@@ -1,4 +1,3 @@
-import {useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 
 import { MainGallery } from "../components/MainGallery";
@@ -9,15 +8,12 @@ import DatePicker from "../Picker/DatePicker.jsx";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 import Tours from "./Tours";
-import { useSelector,useDispatch } from "react-redux";
-import { fetchTourById, findMainImg } from "../slices/tourByIdSlice.js";
 import { useGetTourByIdQuery } from "../services/tourApi.js";
 
 export default function SpecificTour() {
 const {id} = useParams();
-  const dispatch = useDispatch();
 
-const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
+const {data :tour} = useGetTourByIdQuery(id);
 
 
   return (

@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchTourById } from "../../slices/tourByIdSlice";
 import ProgressBar from '../../components/ProgressBar';
 import TicketOverview from '../../components/TicketOverview';
 import { Icon } from "@iconify/react";

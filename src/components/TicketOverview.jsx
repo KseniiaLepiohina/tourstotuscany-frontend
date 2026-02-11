@@ -1,23 +1,22 @@
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import { useGetMainImageQuery,useGetTourByIdQuery } from "../services/tourApi";
 
 
 export default function TicketOverview({ nextLink, onNext }) {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+const navigate = useNavigate();
 const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
 
-  const {data:image,isLoading:imgLoading} = useGetMainImageQuery(tour.id);
+const {data:image} = useGetMainImageQuery(tourData.id);
 
-  const { adultValue, childValue, infantValue } =
-    useSelector((state) => state.tour);
+const { adultValue, childValue, infantValue } = useSelector((state) => state.tour);
 
-const {data :tour,isLoading:loading,isError:error} = useGetTourByIdQuery();
-const totalChildPrice = ((tour.child_price || 0 ) * childValue );
-const totalAdultPrice = ((tour.price || 0 ) * adultValue);
-const totalInfantPrice = ((tour.infant_price || 0 ) *infantValue);
+const {data : tourData, isLoading:loading,isError:error} = useGetTourByIdQuery();
+
+const totalChildPrice = ((tourData.child_price || 0 ) * childValue );
+const totalAdultPrice = ((tourData.price || 0 ) * adultValue);
+const totalInfantPrice = ((tourData.infant_price || 0 ) *infantValue);
 const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
 
   if (loading) return <p>Creating booking...</p>;
@@ -28,12 +27,12 @@ const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
       <h2>Your Tickets Overview</h2>
       <section className="ticketOverview_body">
         <img src={image?.url|| "placeholder.jpg"} 
-        alt={tour.title} 
+        alt={tourData?.title} 
         width={300} 
         height={200} 
         />
         <section className="ticketOverview_main">
-          <h2>{tour.title}</h2>
+          <h2>{tourData?.title}</h2>
           <section className="ticketOverview_data">
             <Icon icon="system-uicons:calendar-month" color="#FA8B02" />
             <h3>{selectedDate || "No date selected"}</h3>
@@ -48,9 +47,9 @@ const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
       <hr />
 
       <section>
-        <TicketField label="Adult (18+)" price={tour.price} value={adultValue} total={totalAdultPrice} />
-        <TicketField label="Child (6-17)" price={tour.child_price} value={childValue} total={totalChildPrice} />
-        <TicketField label="Infant (0-5)" price={tour.infant_price} value={infantValue} total={totalInfantPrice} />
+        <TicketField label="Adult (18+)" price={tourData?.price} value={adultValue} total={totalAdultPrice} />
+        <TicketField label="Child (6-17)" price={tourData?.child_price} value={childValue} total={totalChildPrice} />
+        <TicketField label="Infant (0-5)" price={tourData?.infant_price} value={infantValue} total={totalInfantPrice} />
       </section>
 
       <hr />

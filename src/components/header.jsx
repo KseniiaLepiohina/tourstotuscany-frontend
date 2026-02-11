@@ -1,11 +1,7 @@
-import { useState } from "react";
-import {  NavLink, useLocation } from "react-router-dom";
+import {  NavLink} from "react-router-dom";
 import logo from "../assets/home/logo.svg";
-import CreateAccount from "../pages/auth/CreateAccount"; 
-import Login from "../pages/auth/Login";
 
 export default function Header() {
-  const location = useLocation();
 // const [isOpen, setIsOpen] = useState(false);
 //   const [isCreateOpen, setIsCreateOpen] = useState(false);
 // const [isLoginOpen, setIsLoginOpen] = useState(false);
