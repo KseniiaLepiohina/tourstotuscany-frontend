@@ -43,7 +43,7 @@ export default function Home() {
         </section>
       </section>
 
-      {/* <TuscanySlider /> */}
+      <TuscanySlider />
 
       <section className="introduction">
         <img src={about} alt="Welcome to our site" />

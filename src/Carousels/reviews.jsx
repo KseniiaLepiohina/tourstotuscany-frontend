@@ -38,23 +38,19 @@ import {useGetTestimonialsByIdQuery,useGetAllTestimonialsQuery} from "../service
 
 // export default Reviews;
 const Reviews = ({ tour_id }) => {
-  // Викликаємо обидва хуки. Вони спрацюють ТІЛЬКИ якщо умова skip: false.
   
-  // 1. Запит усіх відгуків (працює, якщо tour_id немає)
   const { 
     data: allData, 
     isLoading: isAllLoading, 
     error: allError 
   } = useGetAllTestimonialsQuery(undefined, { skip: !!tour_id });
 
-  // 2. Запит за ID (працює, якщо tour_id є)
   const { 
     data: tourData, 
     isLoading: isTourLoading, 
     error: tourError 
   } = useGetTestimonialsByIdQuery(tour_id, { skip: !tour_id });
 
-  // Об'єднуємо стани
   const testimonials = tour_id ? tourData : allData;
   const isLoading = tour_id ? isTourLoading : isAllLoading;
   const error = tour_id ? tourError : allError;
