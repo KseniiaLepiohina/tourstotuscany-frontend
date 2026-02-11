@@ -3,6 +3,7 @@ import authReducer from './slices/authSlice';
 import datepickerReducer from './slices/dateSlice';
 import tourPanelReducer from './slices/panelSlice';
 import paymentReducer from './slices/paymentSlice';
+import tourReducer from './slices/tourByIdSlice'
 import { tourApi } from './services/tourApi';
 import { authAPI } from './services/authApi';
 
