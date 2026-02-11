@@ -1,15 +1,14 @@
 
-import React, { useState } from "react";
-import { createPortal } from "react-dom";
+import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
-import { setEmail, setPassword, setFullName, registerUser } from "../../slices/authSlice";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { setEmail, setPassword, setFullName} from "../../slices/authSlice";
 import { useSignUpMutation } from "../../services/authApi";
 import { toast } from "react-toastify";
 
 export default function CreateAccount({ isOpen, onClose }) {
-  const [signUp,{isLoading,error,isSuccess}] = useSignUpMutation();
+
+  const {signUp,error} = useSignUpMutation();
 
   const dispatch = useDispatch();
   const { fullName, email, password } = useSelector(state => state.auth);
@@ -17,16 +16,18 @@ export default function CreateAccount({ isOpen, onClose }) {
   const [showPassword, setShowPassword] = useState(false);
 const newUser  =useSelector((state)=> state.auth.createAccount);
   if (!isOpen) return null;
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try{
-      await signUp({fullName, email, password}).unwrap();
+    try {
+      await signUp({ fullName, email, password }).unwrap();
+      toast.success("Account created successfully!");
       onClose();
-    }catch(error) {
-      toast.error("Check the sign up form");
+    } catch (err) {
+      // Виводимо конкретне повідомлення в toast
+      toast.error(err.data?.message || "Check the sign up form");
     }
-  }
-  return createPortal(
+  };
+  return (
     <section className="modal-overlay ">
       <section className="modal-content auth">
         <header className="modal-header">
@@ -102,7 +103,6 @@ const newUser  =useSelector((state)=> state.auth.createAccount);
           {error && <p className="error">{error}</p>}
         </form>
       </section>
-    </section>,
-    document.body
+    </section>
   );
 }

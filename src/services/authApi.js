@@ -1,4 +1,4 @@
-import { fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi,fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const authAPI = createApi({
   reducerPath:'authAPI',
@@ -6,41 +6,50 @@ export const authAPI = createApi({
   endpoints:(builder) => ({
    signUp:builder.mutation({
     query:(credentials) => {
-      const {fullName, email,password} = credentials;
       return {
-        url:`/users/newUser/${encodeURIComponent(fullName)}/${encodeURIComponent(email)}/${encodeURIComponent(password)}`,
-        method:'POST'
+        url:`/users/newUser`,
+        method:'POST',
+        body:credentials
       };
     },
    }),
    signIn:builder.mutation({
     query:(credentials) => {
-      const {email,password} = credentials;
       return{
         url:`/users/login`,
-        method:'POST'
+        method:'POST',
+        body:credentials
       }
     }
    }),
    forgotPassword:builder.mutation({
     query:(credentials) => {
-      const {email} = credentials;
       return{
         url:`/users/forgot-password`,
-        method:'POST'
+        method:'POST',
+        body:credentials
       }
     }
    }),
    updatePassword:builder.mutation({
     query:(credentials) => {
-      const {newPassword,confirmPassword} = credentials;
       return {
         url:`/users/updatePassword`,
-        method:'PATCH'
+        method:'PATCH',
+        body:credentials
+      }
+    }
+   }),
+   signUpViaGoogle:builder.mutation({
+    query:(credentials) => {
+      return{
+        url:`/google-auth/google-callback`,
+        method:'GET',
+        
       }
     }
    })
 
   }),
 })
-export const {useSignUpMutation,useSignInMutation,useForgotPasswordMutation,useUpdatePasswordMutatiton} = authAPI;
+export const {useSignUpMutation,useSignInMutation,useForgotPasswordMutation,useUpdatePasswordMutation} = authAPI;

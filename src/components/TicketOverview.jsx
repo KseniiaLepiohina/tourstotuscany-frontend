@@ -1,8 +1,7 @@
-import  { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "@iconify/react";
-import { useGetMainImageQuery } from "../services/tourApi";
+import { useGetMainImageQuery,useGetTourByIdQuery } from "../services/tourApi";
 
 
 export default function TicketOverview({ nextLink, onNext }) {
@@ -10,12 +9,12 @@ export default function TicketOverview({ nextLink, onNext }) {
   const navigate = useNavigate();
 const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
 
-  const {data:image,isLoading:imgLoading} = useGetMainImageQuery(tour_id);
+  const {data:image,isLoading:imgLoading} = useGetMainImageQuery(tour.id);
 
   const { adultValue, childValue, infantValue } =
     useSelector((state) => state.tour);
 
-const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
+const {data :tour,isLoading:loading,isError:error} = useGetTourByIdQuery();
 const totalChildPrice = ((tour.child_price || 0 ) * childValue );
 const totalAdultPrice = ((tour.price || 0 ) * adultValue);
 const totalInfantPrice = ((tour.infant_price || 0 ) *infantValue);

@@ -14,12 +14,13 @@ import {
     increaseInfantValue,
     decreaseInfantValue,
   } from '../../slices/tourByIdSlice';
+import { useGetTourByIdQuery } from "../../services/tourApi";
 
 export default function BookingDetails() {
-
+const dispatch = useDispatch();
   const {id} = useParams();
   
-  const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
+  const {data :tour, isLoading:loading,isError:error} = useGetTourByIdQuery(id);
   
   const adultValue = useSelector((state)=> state.tour.adultValue);
   const childValue = useSelector((state)=> state.tour.childValue);
