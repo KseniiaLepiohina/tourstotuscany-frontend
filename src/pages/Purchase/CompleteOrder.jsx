@@ -5,9 +5,6 @@ import check_fill from '../../assets/home/icons/check-fill.png'
 
 export default function completeOrder () {
 
-// axios.get('http://localhost:3000/booking/orderComplete')
-//     .then(res=> console.log('Order is completed'));
-//     .then(res=> console.log('Smth went wrong'));
     return(
         <section>
             <section>

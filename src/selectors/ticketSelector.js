@@ -1,5 +1,4 @@
 import { createSelector } from "@reduxjs/toolkit";
-import { fetchMainImg } from "../slices/fetchTours";
 
 const selectImgTour = (state)=> state.fetchAvaliableTours.fetchMainImg;
 const selectTitle = (state)=> state.tour;

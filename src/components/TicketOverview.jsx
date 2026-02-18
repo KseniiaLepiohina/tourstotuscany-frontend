@@ -1,48 +1,39 @@
-import React, { useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom"; 
+import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
-import { createNewBooking } from "../slices/bookingSlice";
-import { setTotalAdultPrice,setTotalChildPrice,setTotalInfantPrice,setTotalPrice } from "../slices/tourByIdSlice";
+import { useGetMainImageQuery, useGetTourByIdQuery } from "../services/tourApi";
+
 export default function TicketOverview({ nextLink, onNext }) {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
+  const { id } = useParams(); 
 
-  const mainImg = useSelector((state) => state.tour.mainImg);
-  const { adultValue, childValue, infantValue, totalAdultPrice, totalChildPrice, totalInfantPrice, totalPrice } =
-    useSelector((state) => state.tour);
+  const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
+  const { adultValue, childValue, infantValue } = useSelector((state) => state.tour);
 
-  const { tour, loading, error } = useSelector((state) => state.tour);
-useEffect(() => {
-  if (tour) {
-    dispatch(setTotalAdultPrice());
-    dispatch(setTotalChildPrice());
-    dispatch(setTotalInfantPrice());
-    dispatch(setTotalPrice());
-  }
-}, [adultValue, childValue, infantValue, tour, dispatch]);
+  const { data: tourData, isLoading: loading, isError: error } = useGetTourByIdQuery(id);
 
-  useEffect(() => {
-    // Автоматично створюємо бронювання при рендері, якщо потрібно
-    if (tour ) {
-      dispatch(createNewBooking());
-    }
-  }, [dispatch, tour]);
+  const { data: image } = useGetMainImageQuery(tourData?.id, { skip: !tourData?.id });
 
- 
+  const totalChildPrice = (tourData?.child_price || 0) * childValue;
+  const totalAdultPrice = (tourData?.price || 0) * adultValue;
+  const totalInfantPrice = (tourData?.infant_price || 0) * infantValue;
+  const totalPrice = totalAdultPrice + totalChildPrice + totalInfantPrice;
 
-  if (!tour) return <p>Loading tour...</p>;
-  if (loading) return <p>Creating booking...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p>Loading tour details...</p>;
+  if (error) return <p>Error loading tour data.</p>;
 
   return (
     <section className="border">
       <h2>Your Tickets Overview</h2>
       <section className="ticketOverview_body">
-        <img src={mainImg?.[tour.id] || "placeholder.jpg"} alt={tour.title} width={300} height={200} />
+        <img 
+          src={image?.url || "placeholder.jpg"} 
+          alt={tourData?.title} 
+          width={300} 
+          height={200} 
+        />
         <section className="ticketOverview_main">
-          <h2>{tour.title}</h2>
+          <h2>{tourData?.title}</h2>
           <section className="ticketOverview_data">
             <Icon icon="system-uicons:calendar-month" color="#FA8B02" />
             <h3>{selectedDate || "No date selected"}</h3>
@@ -57,9 +48,9 @@ useEffect(() => {
       <hr />
 
       <section>
-        <TicketField label="Adult (18+)" price={tour.price} value={adultValue} total={totalAdultPrice} />
-        <TicketField label="Child (6-17)" price={tour.child_price} value={childValue} total={totalChildPrice} />
-        <TicketField label="Infant (0-5)" price={tour.infant_price} value={infantValue} total={totalInfantPrice} />
+        <TicketField label="Adult (18+)" price={tourData?.price} value={adultValue} total={totalAdultPrice} />
+        <TicketField label="Child (6-17)" price={tourData?.child_price} value={childValue} total={totalChildPrice} />
+        <TicketField label="Infant (0-5)" price={tourData?.infant_price} value={infantValue} total={totalInfantPrice} />
       </section>
 
       <hr />
@@ -69,12 +60,9 @@ useEffect(() => {
         <h2 style={{ color: "#FA8B02" }}>€{totalPrice}</h2>
       </section>
 
-      <button
-      onClick={()=> navigate("/User")}
-      className="general_btn">
+      <button onClick={() => navigate("/User")} className="general_btn">
         <h3>Go to the Next Step</h3>
       </button>
-
     </section>
   );
 }

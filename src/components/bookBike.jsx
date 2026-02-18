@@ -2,8 +2,6 @@ import React from "react";
 import bike from "../assets/home/book_bike.png";
 import date from "../assets/home/icons/Tours/date.svg";
 
-import TimePicker from "../Picker/TimePicker";
-
 export default function BookBike() {
   return (
     <section className="booking">
@@ -58,8 +56,9 @@ export default function BookBike() {
                 </h3>
                 <section className="custom_container_service">
                   <select>
-                    <option >
-                      Select date<img src={date} alt="select the date" />
+                 <img src={date} alt="select the date" />
+                <option > 
+                      Select date
                     </option>
 
                     {/* <DatePicker /> */}
@@ -71,7 +70,7 @@ export default function BookBike() {
                   <span>Time</span>
                 </h3>
                 <section className="custom_container_service">
-                  <TimePicker />
+                  {/* <TimePicker /> */}
                 </section>
               </section>
             </section>

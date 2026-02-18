@@ -43,7 +43,7 @@ export default function AboutUs() {
 
       </section>
       <Advantages />
-      {/* <Testimotionals /> */}
+      <Testimotionals />
     </>
   )
 }
