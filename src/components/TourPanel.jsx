@@ -28,6 +28,7 @@ export default function Panel() {
       style={{display:'flex',gap:"0.625em",padding:"1em 1em 1em 1em",alignItems:"baseline",backgroundColor:"#FFFFFFFF",borderRadius:"0em 0.8em 0.8em 0em"}}>
     <img
     src={NumberOfPeople}
+    alt='numberOfPeople'
     color='#FA8B02'
     />
      <h4>Private Tour</h4> 
@@ -90,6 +91,7 @@ export default function Panel() {
       <section style={{display:"flex",alignItems:"baseline",gap:"0.4em"}}  >
         <img
         src={Tour}
+        alt='select tour'
         />
         <section>
           <h5>Tour</h5>
@@ -104,6 +106,7 @@ export default function Panel() {
       <section style={{display:"flex",alignItems:"baseline",gap:"0.4em"}}>
         <img
         src={Transport}
+        alt='select transport'
         />
         <section> 
           <h5>Transporation</h5>
@@ -176,6 +179,7 @@ export default function Panel() {
       <section style={{display:"flex",alignItems:"baseline",gap:"0.4em"}}  >
         <img
         src={Tour}
+        alt='select tour'
         />
         <section>
           <h5>Tour</h5>
@@ -190,6 +194,7 @@ export default function Panel() {
       <section style={{display:"flex",alignItems:"baseline",gap:"0.4em"}}>
         <img
         src={Types}
+        alt='select types'
         />
         <section> 
           <h5>Types</h5>

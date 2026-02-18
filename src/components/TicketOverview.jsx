@@ -1,35 +1,36 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom"; 
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
-import { useGetMainImageQuery,useGetTourByIdQuery } from "../services/tourApi";
-
+import { useGetMainImageQuery, useGetTourByIdQuery } from "../services/tourApi";
 
 export default function TicketOverview({ nextLink, onNext }) {
-const navigate = useNavigate();
-const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
+  const navigate = useNavigate();
+  const { id } = useParams(); 
 
-const {data:image} = useGetMainImageQuery(tourData.id);
+  const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
+  const { adultValue, childValue, infantValue } = useSelector((state) => state.tour);
 
-const { adultValue, childValue, infantValue } = useSelector((state) => state.tour);
+  const { data: tourData, isLoading: loading, isError: error } = useGetTourByIdQuery(id);
 
-const {data : tourData, isLoading:loading,isError:error} = useGetTourByIdQuery();
+  const { data: image } = useGetMainImageQuery(tourData?.id, { skip: !tourData?.id });
 
-const totalChildPrice = ((tourData.child_price || 0 ) * childValue );
-const totalAdultPrice = ((tourData.price || 0 ) * adultValue);
-const totalInfantPrice = ((tourData.infant_price || 0 ) *infantValue);
-const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
+  const totalChildPrice = (tourData?.child_price || 0) * childValue;
+  const totalAdultPrice = (tourData?.price || 0) * adultValue;
+  const totalInfantPrice = (tourData?.infant_price || 0) * infantValue;
+  const totalPrice = totalAdultPrice + totalChildPrice + totalInfantPrice;
 
-  if (loading) return <p>Creating booking...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p>Loading tour details...</p>;
+  if (error) return <p>Error loading tour data.</p>;
 
   return (
     <section className="border">
       <h2>Your Tickets Overview</h2>
       <section className="ticketOverview_body">
-        <img src={image?.url|| "placeholder.jpg"} 
-        alt={tourData?.title} 
-        width={300} 
-        height={200} 
+        <img 
+          src={image?.url || "placeholder.jpg"} 
+          alt={tourData?.title} 
+          width={300} 
+          height={200} 
         />
         <section className="ticketOverview_main">
           <h2>{tourData?.title}</h2>
@@ -59,12 +60,9 @@ const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
         <h2 style={{ color: "#FA8B02" }}>€{totalPrice}</h2>
       </section>
 
-      <button
-      onClick={()=> navigate("/User")}
-      className="general_btn">
+      <button onClick={() => navigate("/User")} className="general_btn">
         <h3>Go to the Next Step</h3>
       </button>
-
     </section>
   );
 }
