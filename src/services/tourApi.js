@@ -23,7 +23,7 @@ export const tourApi = createApi({
       },
     }),
     getAllTours:builder.query({
-      query:`/tour/tours`
+      query:()=>`/tour/tours`
     }),
     getAllToursByFiltes:builder.query({
       query: ({ title, group_size, transport }) => ({
