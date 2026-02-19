@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-import {useEffect } from "react";
->>>>>>> backend-connect
 import { useParams, Link } from "react-router-dom";
 
 import { MainGallery } from "../components/MainGallery";
@@ -12,21 +8,11 @@ import DatePicker from "../Picker/DatePicker.jsx";
 import { Icon } from "@iconify/react/dist/iconify.js";
 
 import Tours from "./Tours";
-<<<<<<< HEAD
-=======
-import { useSelector,useDispatch } from "react-redux";
-import { fetchTourById, findMainImg } from "../slices/tourByIdSlice.js";
->>>>>>> backend-connect
 import { useGetTourByIdQuery } from "../services/tourApi.js";
 
 export default function SpecificTour() {
-const {id} = useParams();
 
-<<<<<<< HEAD
 const {data :tour} = useGetTourByIdQuery(id);
-=======
-const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
->>>>>>> backend-connect
 
 
   return (
