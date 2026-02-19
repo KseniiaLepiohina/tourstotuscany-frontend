@@ -2,41 +2,6 @@ import Arrows from "./arrows";
 
 import {useGetTestimonialsByIdQuery,useGetAllTestimonialsQuery} from "../services/tourApi";
 
-// const Reviews = ({ tour_id }) => {
-//   const {data:testimonials,loading,error} = useGetTestimonialsQuery(tour_id) ;
-
-//   if (loading) return <p>Loading testimonials...</p>;
-//   if (error) return <p>Error loading testimonials: {error}</p>;
-
-
-//   return (
-//     <section className="carousel_wrapper">
-//       <section className="carousel_title">
-//         <h2>
-//           <strong>
-//             {tour_id ? "Happy Customers Say" : "Happy Customers Say"}
-//           </strong>
-//         </h2>
-
-//         <Arrows />
-//       </section>
-
-//             {Array.isArray(testimonials) && testimonials.map((t) => (
-//               <section className="carousel_container" key={t.tour_id}>
-//                 <ul> 
-//                   <li><h3 className="name">{t.reviewer_name}</h3></li>
-//                   <li><p className="review">{t.comment}</p></li>
-//                 </ul>
-//               </section>
-//             ))}
-//          (
-//           <p>No testimonials yet.</p>
-//         )
-//     </section>
-//   );
-// };
-
-// export default Reviews;
 const Reviews = ({ tour_id }) => {
   
   const { 
@@ -58,6 +23,8 @@ const Reviews = ({ tour_id }) => {
   if (isLoading) return <p>Loading testimonials...</p>;
   
   if (error) return <p>Error loading testimonials: {JSON.stringify(error.data)}</p>;
+  console.log("reviews", allData);
+
 
   return (
     <section className="carousel_wrapper">
