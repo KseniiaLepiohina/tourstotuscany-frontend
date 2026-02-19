@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 // import React, { useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 // import { Icon } from "@iconify/react";
@@ -7,17 +8,34 @@
 // import { setConfirmPassword, setNewPassword, updateUserPassword } from "../../slices/authSlice";
 // import { toast } from "react-toastify";
 // import { useUpdatePasswordMutation} from "../../services/authApi";
+=======
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Icon } from "@iconify/react";
+import Login from "./Login";
+import ApprovedPassword from "./ApprovedPassword";
+import { useDispatch, useSelector } from "react-redux";
+import { setConfirmPassword, setNewPassword, updateUserPassword } from "../../slices/authSlice";
+import { toast } from "react-toastify";
+import { createPortal } from "react-dom";
+import { useUpdatePasswordMutatiton } from "../../services/authApi";
+>>>>>>> backend-connect
 
 
 // // export default function NewPassword() {
 
 // //   const [showPassword, setShowPassword] = useState(false);
 
+<<<<<<< HEAD
 // //   const { loading, newPassword, confirmPassword } = useSelector((state) => state.auth);
+=======
+  const { loading, newPassword, confirmPassword } = useSelector((state) => state.auth);
+>>>>>>> backend-connect
 
 // //   const dispatch = useDispatch();
 // //   const navigate = useNavigate();
 
+<<<<<<< HEAD
 // //   const [updatePassword, { isLoading, error, isSuccess }] = useUpdatePasswordMutation();
   
 // //   const handleSubmit = async (e) => {
@@ -55,6 +73,45 @@
 // //           <p>
 // //             Your new password must be different from previously used passwords.
 // //           </p>
+=======
+  const [updatePassword, { isLoading, error, isSuccess }] = useUpdatePasswordMutatiton();
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+await updatePassword({confirmPassword,newPassword}).unwrap();
+toast.success("Password succesfully updated");
+    } catch (error) {
+toast.error("Check the passwords")
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error("Password do not match");
+      return
+    }
+    if (newPassword.length < 6) {
+      toast.error("Password must be at least 6 characters");
+      return;
+    }
+    
+  }
+
+  return (
+    <section className="modal">
+      <section className="auth">
+        <form onSubmit={handleSubmit} method="post" action="/auth/newPassword">
+          <Icon
+            aria-label="reset password"
+            icon="bx:key"
+            color="#FA8B02"
+            className="enter new password"
+            width={24}
+            height={24}
+          />
+          <h1>Set New Password</h1>
+          <p>
+            Your new password must be different from previously used passwords.
+          </p>
+>>>>>>> backend-connect
 
 // //           <label for="new_password">New Password</label>
 // //           <input
@@ -120,6 +177,7 @@
 // //           </Link>
 
 
+<<<<<<< HEAD
 // //           <section>
 // //             <Link to="/auth/login" element={<Login />}>
 // //               <button
@@ -191,3 +249,30 @@
 //     </section>
 //   );
 // }
+=======
+          <section>
+            <Link to="/auth/login" element={<Login />}>
+              <button
+                style={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.4em",
+                }}
+              >
+                <Icon
+                  icon="bi:arrow-right"
+                  height="20"
+                  width="20"
+                />
+                <span color="#333333">Back to Login</span>
+              </button>
+            </Link>
+          </section>
+        </form>
+      </section>
+    </section>
+  );
+}
+>>>>>>> backend-connect

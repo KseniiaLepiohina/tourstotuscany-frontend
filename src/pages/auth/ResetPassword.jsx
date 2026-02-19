@@ -8,6 +8,7 @@ import { useForgotPasswordMutation } from "../../services/authApi";
 export default function ResetPassword() {
   const navigate = useNavigate(); 
   const dispatch = useDispatch();
+<<<<<<< HEAD
   const { email } = useSelector((state) => state.auth);
 const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
 
@@ -21,6 +22,20 @@ const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
       toast.error(err.data?.message || "Check email field");
     }
   };
+=======
+const {email,loading,success}=useSelector((state)=> state.auth);
+const [forgotPassword,{error,isLoading,isSuccess}] = useForgotPasswordMutation();
+  const handleSubmit = async(e)=> {
+    e.preventDefault();
+    try{
+      await forgotPassword({email}).unwrap();
+      toast.success(success);
+    }catch(error) {
+ toast.error('Check email field'|| error)
+  }
+  }
+ 
+>>>>>>> backend-connect
 
   return (
     <section className="modal">

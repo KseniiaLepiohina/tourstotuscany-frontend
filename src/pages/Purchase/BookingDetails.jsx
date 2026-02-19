@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import { useEffect } from "react";
+>>>>>>> backend-connect
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import ProgressBar from '../../components/ProgressBar';
@@ -18,7 +22,11 @@ export default function BookingDetails() {
 const dispatch = useDispatch();
   const {id} = useParams();
   
+<<<<<<< HEAD
   const {data :tour, isLoading:loading,isError:error} = useGetTourByIdQuery(id);
+=======
+  const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
+>>>>>>> backend-connect
   
   const adultValue = useSelector((state)=> state.tour.adultValue);
   const childValue = useSelector((state)=> state.tour.childValue);
