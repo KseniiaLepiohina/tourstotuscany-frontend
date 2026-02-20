@@ -11,6 +11,7 @@ import Tours from "./Tours";
 import { useGetTourByIdQuery } from "../services/tourApi.js";
 
 export default function SpecificTour() {
+const {id} = useParams(id);
 
 const {data :tour} = useGetTourByIdQuery(id);
 

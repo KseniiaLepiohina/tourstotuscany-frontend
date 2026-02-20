@@ -1,68 +1,36 @@
-<<<<<<< HEAD
 import { useNavigate, useParams } from "react-router-dom"; 
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import { useGetMainImageQuery, useGetTourByIdQuery } from "../services/tourApi";
-=======
-import  { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { Icon } from "@iconify/react";
-import { useGetMainImageQuery } from "../services/tourApi";
-
->>>>>>> backend-connect
+import { selectedDate,selectedTime } from "../slices/dateSlice";
 
 export default function TicketOverview({ nextLink, onNext }) {
   const navigate = useNavigate();
-  const { id } = useParams(); 
+  const { id ,tour_id} = useParams(); 
 
-<<<<<<< HEAD
-  const { selectedDate, selectedTime } = useSelector((state) => state.datepicker);
-  const { adultValue, childValue, infantValue } = useSelector((state) => state.tour);
-
-  const { data: tourData, isLoading: loading, isError: error } = useGetTourByIdQuery(id);
-
-  const { data: image } = useGetMainImageQuery(tourData?.id, { skip: !tourData?.id });
-
-  const totalChildPrice = (tourData?.child_price || 0) * childValue;
-  const totalAdultPrice = (tourData?.price || 0) * adultValue;
-  const totalInfantPrice = (tourData?.infant_price || 0) * infantValue;
-  const totalPrice = totalAdultPrice + totalChildPrice + totalInfantPrice;
-
-  if (loading) return <p>Loading tour details...</p>;
-  if (error) return <p>Error loading tour data.</p>;
-=======
   const {data:image,isLoading:imgLoading} = useGetMainImageQuery(tour_id);
 
   const { adultValue, childValue, infantValue } =
     useSelector((state) => state.tour);
 
-const {data :tour, isLoading,isError, error} = useGetTourByIdQuery(id);
-const totalChildPrice = ((tour.child_price || 0 ) * childValue );
-const totalAdultPrice = ((tour.price || 0 ) * adultValue);
-const totalInfantPrice = ((tour.infant_price || 0 ) *infantValue);
+const {data :tourData, loading, error} = useGetTourByIdQuery(id);
+const totalChildPrice = ((tourData.child_price || 0 ) * childValue );
+const totalAdultPrice = ((tourData.price || 0 ) * adultValue);
+const totalInfantPrice = ((tourData.infant_price || 0 ) *infantValue);
 const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
 
   if (loading) return <p>Creating booking...</p>;
   if (error) return <p>Error: {error}</p>;
->>>>>>> backend-connect
 
   return (
     <section className="border">
       <h2>Your Tickets Overview</h2>
       <section className="ticketOverview_body">
-<<<<<<< HEAD
         <img 
           src={image?.url || "placeholder.jpg"} 
           alt={tourData?.title} 
           width={300} 
           height={200} 
-=======
-        <img src={image?.url|| "placeholder.jpg"} 
-        alt={tour.title} 
-        width={300} 
-        height={200} 
->>>>>>> backend-connect
         />
         <section className="ticketOverview_main">
           <h2>{tourData?.title}</h2>

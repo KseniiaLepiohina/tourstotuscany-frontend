@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // import  { useState } from "react";
 // import { Link, useNavigate } from "react-router-dom";
 // import { Icon } from '@iconify/react';
@@ -12,26 +11,10 @@
 //   const [showPassword, setShowPassword] = useState(false);
 //   const navigate = useNavigate();
 //   const dispatch = useDispatch();
-=======
-import  { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Icon } from '@iconify/react';
-import { useDispatch, useSelector } from "react-redux";
-import { toast } from "react-toastify";
-import { setEmail,setPassword } from "../../slices/authSlice";
-import { useSignInMutation } from "../../services/authApi";
-export default function Login({ isOpen, onClose }) {
-  const [signIn,{isLoading, error, isSuccess}] = useSignInMutation();
-
-  const [showPassword, setShowPassword] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
->>>>>>> backend-connect
  
 // const {email, password} = useSelector((state)=> state.auth);
 //   if (!isOpen) return null;
 
-<<<<<<< HEAD
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     if (!email || !password) {
@@ -47,20 +30,6 @@ export default function Login({ isOpen, onClose }) {
 //       toast.error(err.data?.message || "Invalid credentials");
 //     }
 //   };
-=======
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try{
-      await signIn({email,password}).unwrap();
-toast.success("User logged in successfully");
-    }catch(error) {
- if (!email || !password) {
-      toast.error("Please, fill in all fields");
-      return;
-    }
-    }
-  };
->>>>>>> backend-connect
 
 //   return (
 //     <section className="modal-overlay">

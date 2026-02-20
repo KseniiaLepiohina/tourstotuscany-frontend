@@ -2,29 +2,19 @@
 import { useState } from "react";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
-<<<<<<< HEAD
 import { setEmail, setPassword, setFullName} from "../../slices/authSlice";
-=======
-import { setEmail, setPassword, setFullName, registerUser } from "../../slices/authSlice";
-import { createUserWithEmailAndPassword } from "firebase/auth";
->>>>>>> backend-connect
 import { useSignUpMutation } from "../../services/authApi";
 import { toast } from "react-toastify";
 
 export default function CreateAccount({ isOpen, onClose }) {
-<<<<<<< HEAD
 
   const {signUp,error} = useSignUpMutation();
-=======
-  const [signUp,{isLoading,error,isSuccess}] = useSignUpMutation();
->>>>>>> backend-connect
 
   const dispatch = useDispatch();
   const { fullName, email, password } = useSelector(state => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
   if (!isOpen) return null;
-<<<<<<< HEAD
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -37,18 +27,6 @@ export default function CreateAccount({ isOpen, onClose }) {
     }
   };
   return (
-=======
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    try{
-      await signUp({fullName, email, password}).unwrap();
-      onClose();
-    }catch(error) {
-      toast.error("Check the sign up form");
-    }
-  }
-  return createPortal(
->>>>>>> backend-connect
     <section className="modal-overlay ">
       <section className="modal-content auth">
         <header className="modal-header">
