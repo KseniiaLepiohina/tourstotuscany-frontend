@@ -1,6 +1,5 @@
 {
   "name": "tour-to-tuscany-frontend",
-  "homepage": "https://tourstotuscany-frontend.vercel.app/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,7 +10,6 @@
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.13.2",
-    "firebase": "^12.4.0",
     "iconify": "^1.4.0",
     "photoswipe": "^5.4.4",
     "react": "^19.2.0",

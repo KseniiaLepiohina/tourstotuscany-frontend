@@ -24,10 +24,10 @@ export const authAPI = createApi({
     }),
     forgotPassword: builder.mutation({
       query: (credentials) => {
-        const { email } = credentials;
         return {
           url: `/users/forgot-password`,
-          method: 'POST'
+          method: 'POST',
+          body:credentials
         }
       }
     }),
@@ -45,7 +45,7 @@ export const authAPI = createApi({
         return {
           url: `/google-auth/google-callback`,
           method: 'GET',
-
+          body:credentials
         }
       }
     })

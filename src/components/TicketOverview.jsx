@@ -8,7 +8,7 @@ export default function TicketOverview({ nextLink, onNext }) {
   const navigate = useNavigate();
   const { id ,tour_id} = useParams(); 
 
-  const {data:image,isLoading:imgLoading} = useGetMainImageQuery(tour_id);
+  const {data:image} = useGetMainImageQuery(tour_id);
 
   const { adultValue, childValue, infantValue } =
     useSelector((state) => state.tour);

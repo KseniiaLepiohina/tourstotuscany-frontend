@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 
 import { MainGallery } from "../components/MainGallery";
 import { GalleryPlaces } from "../components/GalleryPlaces";
@@ -10,21 +10,19 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Tours from "./Tours";
 import { useGetTourByIdQuery } from "../services/tourApi.js";
 
-export default function SpecificTour() {
-const {id} = useParams(id);
+export default function SpecificTour({id}) {
 
-const {data :tour} = useGetTourByIdQuery(id);
-
+const {data:tour} = useGetTourByIdQuery(id);
 
   return (
     <section className="specifictour">
       <section>
-        <Link to="/tours" element={<Tours />}>
+        <NavLink to="/tours" element={<Tours />}>
           <span className="btn_back">
             <Icon icon="bi:arrow-right" height={24} width={24} rotate="180deg" />
             <p>Back</p>
           </span>
-        </Link>
+        </NavLink>
       </section>
 
       <section className="main_specificTour">
@@ -51,9 +49,9 @@ const {data :tour} = useGetTourByIdQuery(id);
               <TimePicker />
             </section>
           </section>
-          <Link to={`/booking/${tour.id}`}>
+          <NavLink to={`/booking/${tour.id}`}>
             <button className="general_btn">Buy Now</button>
-          </Link>
+          </NavLink>
         </section>
       </section>
       <section className="detail_container">
