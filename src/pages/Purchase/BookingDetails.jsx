@@ -13,11 +13,14 @@ import {
     decreaseInfantValue,
   } from '../../slices/tourByIdSlice';
 import { useGetTourByIdQuery } from "../../services/tourApi";
+import DropDownDatePicker from "../../Picker/DropDownDatePicker";
+import TimePicker from "../../Picker/TimePicker";
 
 export default function BookingDetails() {
 const dispatch = useDispatch();
   const {id} = useParams();
-  
+  const {selectedDate,selectedTime} = useSelector((state)=> state.datepicker);
+
   const {data :tour, isLoading:loading, error} = useGetTourByIdQuery(id);
   
   const adultValue = useSelector((state)=> state.tour.adultValue);
@@ -29,6 +32,10 @@ const dispatch = useDispatch();
     if (error) return <p>Error: {error}</p>;
     if (!tour) return <p>Tour not found</p>;
 
+    console.log("Selected date",selectedDate);
+    console.log("Selected date",selectedTime);
+    console.log("Child price", tour.child_price)
+    
   return (
     <>
       <ProgressBar />
@@ -43,18 +50,17 @@ const dispatch = useDispatch();
                     <h2>When you will visit?</h2>
                     <section style={{ display: "flex", alignItems: "center" }}>
                       <Icon icon="system-uicons:calendar-month" width={24} height={24} />
-                      <select>
+                       {/*<select>
                         <option>{selectedDate || "Choose a date"}</option>
-                      </select>
+                      </select> */}
+                     <h3>{selectedDate || "No date selected"}</h3>
                     </section>
                   </section>
                   <section className="booking_data">
                     <h2>Which time?</h2>
                     <section style={{ display: "flex", alignItems: "center" }}>
                       <Icon icon="system-uicons:clock" height={24} width={24} />
-                      <select>
-                        <option>{selectedTime || "Choose a time"}</option>
-                      </select>
+                     <h3>{selectedTime || "No time selected"}</h3>
                     </section>
                   </section>
               </section>
@@ -108,7 +114,7 @@ const dispatch = useDispatch();
                 />
               </section>
             </section>
-            <TicketOverview nextLink="/User" />
+<TicketOverview nextLink={`/User/${id}`} />
           </section>
         </section>
     </>

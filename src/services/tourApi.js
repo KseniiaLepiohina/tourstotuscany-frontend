@@ -7,6 +7,7 @@ export const tourApi = createApi({
     getTourById:builder.query({
       query:(id) => `/tour/${id}`,
     }),
+
     getTestimonialsById:builder.query({
       query:(tour_Id) => `/testimonials/${tour_Id}`
     }),
@@ -22,11 +23,14 @@ export const tourApi = createApi({
         };
       },
     }),
+  
     getAllTours:builder.query({
       query:()=>`/tour/tours`
     }),
     getAllToursByFiltes:builder.query({
+      
       query: ({ title, group_size, transport }) => ({
+        
     url: '/tour/tours',
     params: {
       title,
@@ -38,5 +42,4 @@ export const tourApi = createApi({
   }),
 })
 console.log("BASE URL IS:", process.env.REACT_APP_API)
-
 export const {useGetTourByIdQuery, useGetTestimonialsByIdQuery,useGetAllTestimonialsQuery,useGetMainImageQuery,useGetAllToursQuery,useGetAllToursByFiltesQuery} = tourApi;

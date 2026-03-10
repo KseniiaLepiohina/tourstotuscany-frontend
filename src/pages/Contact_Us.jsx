@@ -1,25 +1,30 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useContactUsMutation } from "../services/contactUsApi";
-import { useDispatch, useSelector } from "react-redux";
-import { setEmail,setUsername,setMessage } from '../slices/contactUs';
+// import { useContactUsMutation } from "../services/contactUsApi";
+// import { useDispatch, useSelector } from "react-redux";
+// import { setMessage } from '../slices/contactUs';
+// import { setFullName,setEmail } from '../slices/authSlice';
 
 
 export default function ContactUs() {
-  const dispatch = useDispatch();
-const {email,username,message} = useSelector((state)=> state.contactUs)
-const [sendContact] = useContactUsMutation();
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      await sendContact({ username, email, message }).unwrap();
-      alert("Message sent successfully!");
-    } catch (err) {
-      alert("Failed to send message");
-    }
-  };
+// const dispatch = useDispatch();
+// const [sendContact] = useContactUsMutation();
+// const {message} = useSelector((state)=> state.contactUs)
+// const {fullName,email} = useSelector((state)=> state.auth);
+
+
+
+// const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     try {
+//       await sendContact({ fullName,email, message }).unwrap();
+//       alert("Message sent successfully!");
+//     } catch (err) {
+//       alert("Failed to send message");
+//     }
+//   };
   return (
     <section>
       <section className="contact-container">
@@ -47,15 +52,14 @@ const handleSubmit = async (e) => {
             <span>italianlimo@gmail.com</span>
           </a>
         </section>
-        <form
+        {/* <form
           className="Contact-form"
           method="post"
-onSubmit={handleSubmit}
-        >
+          onSubmit={handleSubmit}>
           <label htmlFor="username"> <h4>Name and Surname</h4></label>
           <input
             name="username"
-            onChange={(e) => dispatch(setUsername(e.target.value))}
+            onChange={(e) => dispatch(setFullName(e.target.value))}
             placeholder="Enter your name and surname" />
           <label htmlFor="email"><h4>Email Address</h4></label>
           <input
@@ -77,7 +81,7 @@ onSubmit={handleSubmit}
             className="general_btn" type="submit" >
             <span>Send Message</span>
           </button>
-        </form>
+        </form> */}
       </section>
 
       <div id="map">

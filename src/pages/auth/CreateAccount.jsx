@@ -6,7 +6,7 @@ import { setEmail, setPassword, setFullName} from "../../slices/authSlice";
 import { useSignUpMutation } from "../../services/authApi";
 import { toast } from "react-toastify";
 
-export default function CreateAccount({ isOpen, onClose }) {
+export default function CreateAccount({ onClose }) {
 
   const {signUp,error} = useSignUpMutation();
 
@@ -14,7 +14,8 @@ export default function CreateAccount({ isOpen, onClose }) {
   const { fullName, email, password } = useSelector(state => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
-  if (!isOpen) return null;
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -26,10 +27,13 @@ export default function CreateAccount({ isOpen, onClose }) {
       toast.error(err.data?.message || "Check the sign up form");
     }
   };
+
+  console.log("Error", error);
+  
   return (
     <section className="modal-overlay ">
-      <section className="modal-content auth">
-        <header className="modal-header">
+      <section className="modal-content">
+        <section className="modal-header">
           <h2>Create Account</h2>
           <button onClick={onClose} className="modal-close-btn">
             <Icon icon="clarity:window-close-line" 
@@ -38,7 +42,7 @@ export default function CreateAccount({ isOpen, onClose }) {
             color="#333333"
             />
           </button>
-        </header>
+        </section>
 
         <form onSubmit={handleSubmit}  className="modal-form">
           <label>Name and Surname</label>
@@ -47,6 +51,7 @@ export default function CreateAccount({ isOpen, onClose }) {
             onChange={(e) => dispatch(setFullName(e.target.value))}
             placeholder="Full Name"
           />
+
           <label>Email</label>
           <input
             value={email}
@@ -56,8 +61,9 @@ export default function CreateAccount({ isOpen, onClose }) {
             autoComplete="username"
             required autoFocus
           />
+
           <label>Password</label>
-          <section style={{display:'flex'}}>
+          <section className="header_options">
             <input
             value={password}
             onChange={(e) => dispatch(setPassword(e.target.value))}
@@ -71,6 +77,7 @@ export default function CreateAccount({ isOpen, onClose }) {
               <Icon icon="ant-design:eye-filled" width={24} height={24} />
             )}
           </span>
+
           </section>
           <section>
             <input
@@ -83,8 +90,14 @@ export default function CreateAccount({ isOpen, onClose }) {
           
           <section className="submit" >
             <button type="submit" className="general_btn ">Sign Up</button>
-            <span>or</span>
-            <section>
+          </section>
+          
+         
+          
+          {error && <p className="error">{error}</p>}
+        </form>
+        <section>
+             <span>or</span>
               <button
              className="btn_ggl_submit"
               type="submit">
@@ -95,12 +108,7 @@ export default function CreateAccount({ isOpen, onClose }) {
               />
               <h4>Sign Up with Google</h4>
             </button>
-            </section>
-            
           </section>
-          
-          {error && <p className="error">{error}</p>}
-        </form>
       </section>
     </section>
   );

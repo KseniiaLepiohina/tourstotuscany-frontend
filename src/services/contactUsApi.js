@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
 
 export const contactUsAPI = createApi({
-  reducerPath: 'contactAPI',
+  reducerPath: 'contactAPI', 
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API }),
   endpoints: (builder) => ({ 
-    contactUs: builder.mutation({
+    contactUs: builder.mutation({ 
       query: (credentials) => ({
         url: `/contact-us`,
         method: 'POST',

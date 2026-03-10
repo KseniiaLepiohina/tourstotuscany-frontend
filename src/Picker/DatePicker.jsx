@@ -5,7 +5,7 @@ import next from "../assets/home/icons/test_right.svg";
 import prev from "../assets/home/icons/test_left.svg";
 import { setDate } from "../slices/dateSlice";
 
-export default function DatePicker() {
+const DatePicker = ({onSelect})=> {
   const today = new Date();
 
   const [month, setMonth] = useState(today.getMonth());
@@ -106,7 +106,10 @@ export default function DatePicker() {
                 cursor: "pointer",
                 background: selectedDate === fullDate ? "#FA8B02" : "white",
               }}
-              onClick={() => dispatch(setDate(fullDate))}
+              onClick={() => {
+                dispatch(setDate(fullDate));
+                if (onSelect) onSelect(); 
+              }}
             >
               {day}
             </span>
@@ -116,3 +119,5 @@ export default function DatePicker() {
     </section>
   );
 }
+export default DatePicker;
+

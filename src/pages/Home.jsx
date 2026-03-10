@@ -170,7 +170,6 @@ export default function Home() {
             <img src={bikeTour} alt="BIKE TOURS" />
             <section>
 
-
               <section className="welcome_descrip" >
                 <ul>
                   <h2>BIKE TOURS</h2>
@@ -291,7 +290,6 @@ export default function Home() {
                 <p>Wherever You Want</p>
               </section>
               <section className="details_packages">
-
                 <img className="icons" src={price} alt="At the best price" />
                 <p>At the best price</p>
               </section>

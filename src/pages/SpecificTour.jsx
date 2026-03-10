@@ -1,4 +1,4 @@
-import {  NavLink } from "react-router-dom";
+import {  NavLink, useParams } from "react-router-dom";
 
 import { MainGallery } from "../components/MainGallery";
 import { GalleryPlaces } from "../components/GalleryPlaces";
@@ -10,11 +10,21 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import Tours from "./Tours";
 import { useGetTourByIdQuery } from "../services/tourApi.js";
 
-export default function SpecificTour({id}) {
+export default function SpecificTour() {
+const {id} = useParams();
 
-const {data:tour} = useGetTourByIdQuery(id);
+const { data: tour, isLoading, isError } = useGetTourByIdQuery(id);
 
-  return (
+  // 1. Поки дані вантажаться, показуємо заглушку
+  if (isLoading) {
+    return <div className="loading_spinner">Loading tour details...</div>;
+  }
+
+  // 2. Якщо сталася помилка (наприклад, туру з таким ID немає)
+  if (isError || !tour) {
+    return <div className="error_message">Tour not found or server error.</div>;
+  }  
+   return (
     <section className="specifictour">
       <section>
         <NavLink to="/tours" element={<Tours />}>

@@ -1,26 +1,31 @@
-import { useNavigate, useParams } from "react-router-dom"; 
+import { NavLink, useParams } from "react-router-dom"; 
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import { useGetMainImageQuery, useGetTourByIdQuery } from "../services/tourApi";
 import { selectedDate,selectedTime } from "../slices/dateSlice";
 
 export default function TicketOverview({ nextLink, onNext }) {
-  const navigate = useNavigate();
   const { id ,tour_id} = useParams(); 
 
   const {data:image} = useGetMainImageQuery(tour_id);
 
-  const { adultValue, childValue, infantValue } =
-    useSelector((state) => state.tour);
+  const { adultValue, childValue, infantValue } = useSelector((state) => state.tour);  
+const {selectedDate,selectedTime} = useSelector((state)=> state.datepicker);
 
-const {data :tourData, loading, error} = useGetTourByIdQuery(id);
+    const {data :tourData, loading, error} = useGetTourByIdQuery(id); 
+
+
+if (loading) return <p>Creating booking...</p>;
+  if (error) return <p>Error loading data</p>;
+  if (!tourData) return null;
+
 const totalChildPrice = ((tourData.child_price || 0 ) * childValue );
 const totalAdultPrice = ((tourData.price || 0 ) * adultValue);
 const totalInfantPrice = ((tourData.infant_price || 0 ) *infantValue);
+
 const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
 
-  if (loading) return <p>Creating booking...</p>;
-  if (error) return <p>Error: {error}</p>;
+console.log("Error", error);
 
   return (
     <section className="border">
@@ -59,10 +64,12 @@ const totalPrice = totalAdultPrice + totalChildPrice+ totalInfantPrice;
         <h2 style={{ color: "#333" }}>Total Price</h2>
         <h2 style={{ color: "#FA8B02" }}>€{totalPrice}</h2>
       </section>
-
-      <button onClick={() => navigate("/User")} className="general_btn">
+    <NavLink to={nextLink}>
+      <button  className="general_btn">
         <h3>Go to the Next Step</h3>
       </button>
+    </NavLink>
+      
     </section>
   );
 }

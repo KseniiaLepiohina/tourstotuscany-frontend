@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import {  NavLink } from 'react-router-dom';
 import { Icon } from "@iconify/react/dist/iconify.js";
 import clndr from '../assets/home/icons/Tours/clndr_orng.svg';
 import ppl from '../assets/home/icons/Tours/group_col.svg';
@@ -10,61 +10,68 @@ import { useGetAllToursQuery, useGetMainImageQuery } from "../services/tourApi";
 export default function Tours() {
 
 const { data: tours } = useGetAllToursQuery();
-const { data: mainImg } = useGetMainImageQuery();
+// const { data: mainImg } = useGetMainImageQuery();
   return (
     <section>
       <h1>Tour Packages</h1>
       <section className="tours_main_container">
-        {tours.map((tour) => (
-          <section className="tour" key={tour.id}>
-           {mainImg[tour.id] && (
-  <img
-    className="mainImg"
-    src={mainImg[tour.id]}
-    alt={tour.title}
-  />
+       {Array.isArray(tours) && tours.length > 0 ? (
+        tours.map((tour) => (
+    <section className="tour" key={tour.id}>
+      {/* {mainImg?.[tour.id] && (
+        <img
+          className="mainImg"
+          src={tour.image_main_url}
+          alt={tour.title || "tour image"}
+        />
+      )} */}
+       <img
+       key={tour.tour_id}
+          className="mainImg"
+          src={tour.image_main_url}
+          alt={tour.title || "tour image"}
+        />
+
+      <h2>
+        <strong>{tour.title}</strong>
+      </h2>
+
+      <section className="dest_price">
+        <h3>from</h3>
+        <h2>{tour.price}€</h2>
+      </section>
+
+      <section className="details">
+        <section className="sub_details">
+          <img className="icons" src={clndr} alt="Choose a date" loading="lazy" />
+          <p>{tour.duration}</p>
+        </section>
+
+        <section className="sub_details">
+          <img className="icon" src={ppl} alt="choose a number of people" loading="lazy" />
+          <p>{tour.group_size} PP.</p>
+        </section>
+      </section>
+
+      <section className="description">
+        <p>
+          {tour.short_description?.length > 5
+            ? tour.short_description.slice(0, 100) + "..."
+            : tour.short_description || ""}
+        </p>
+      </section>
+
+      <NavLink to={`/tours/${tour.id}`}>
+        <section className="link_service">
+          <span>Read More</span>
+          <Icon icon="bi:arrow-right" color="#FA8B02" />
+        </section>
+      </NavLink>
+    </section>
+  ))
+) : (
+  <p>No tours</p>
 )}
-
-            <h2>
-              <strong>{tour.title}</strong>
-            </h2>
-            <section className="dest_price">
-              <h3>from</h3> <h2>{tour.price}€</h2>
-            </section>
-
-            <section className="details">
-              <section className="sub_details">
-                <img className="icons" src={clndr} alt="Choose a date" loading="lazy"  />
-                <p>{tour.duration}</p>
-              </section>
-              <section className="details">
-                <section className="sub_details">
-                  <img className="icon" src={ppl} alt="choose a number of people" loading="lazy"  />
-                  <p>{tour.group_size} PP.</p>
-                </section>
-              </section>
-            </section>
-
-            <section className="description">
-              <p>{tour.short_description?.length > 5
-                ? tour.short_description.slice(0, 100) + '...'
-                : tour.short_description || ''}</p>
-            </section>
-
-
-            <section>
-              <Link to={`/tours/${tour.id}`}>
-                <section className="link_service">
-                  <span>Read More</span>  
-                   <Icon
-            icon="bi:arrow-right"
-            color="#FA8B02"
-            />
-                </section>
-              </Link>
-            </section>
-          </section>
-        ))}
       </section>
 
 
