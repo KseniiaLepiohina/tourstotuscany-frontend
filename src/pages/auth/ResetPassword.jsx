@@ -1,9 +1,10 @@
-import { Link,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {Icon} from '@iconify/react';
 import { useDispatch, useSelector } from "react-redux";
 import {setEmail} from "../../slices/authSlice";
 import { toast } from "react-toastify";
 import { useForgotPasswordMutation } from "../../services/authApi";
+import BackToLogin from "../../components/BackToLogin";
 
 export default function ResetPassword() {
   const navigate = useNavigate(); 
@@ -23,8 +24,17 @@ const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
   };
 
   return (
-    <section className="modal">
-      <section className="auth">
+    <section className="modal-overlay">
+      <section className="modal-content">
+        <section className="modal-header">
+          <section className="modal_icon">
+            <Icon icon="bx:key" width={24} height={24} color="FA8B02"/>
+          </section>
+          
+        </section>
+       <h1>Forgot Password</h1>
+       <p>No worries, we'll send you reset instructions.</p>
+       
         <form onSubmit={handleSubmit}>
           <label htmlFor="email">Email Address</label>
           <input
@@ -40,15 +50,9 @@ const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
             {isLoading ? "Sending..." : "Reset Password"}
           </button>
 
-          <section>
-            <Link to="/auth/login">
-              <button type="button" style={{ background: 'transparent', border: 'none' }}>
-                <Icon icon="bi:arrow-left" width="20" /> 
-                <span>Back to Login</span>
-              </button>
-            </Link>
-          </section>
+         <BackToLogin/>
         </form>
+      
       </section>
     </section>
   );

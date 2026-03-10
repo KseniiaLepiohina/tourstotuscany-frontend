@@ -4,10 +4,10 @@ import datepickerReducer from './slices/dateSlice';
 import tourPanelReducer from './slices/panelSlice';
 import paymentReducer from './slices/paymentSlice';
 import tourReducer from './slices/tourByIdSlice'
+import contactUsReducer from './slices/contactUs';
 import { tourApi } from './services/tourApi';
 import { authAPI } from './services/authApi';
 import { contactUsAPI } from './services/contactUsApi';
-import contactUsReducer from './slices/contactUs'
 
 const store = configureStore({
     reducer: {
@@ -17,9 +17,9 @@ const store = configureStore({
         tour: tourReducer,
         auth: authReducer,
         datepicker: datepickerReducer,
-        contacUs:contactUsReducer,
+        contactUs:contactUsReducer,
         panel: tourPanelReducer,
-        tickets:paymentReducer,
+        payment:paymentReducer,
     },
     middleware:(getDefaultMiddleware) => getDefaultMiddleware().concat(
     tourApi.middleware,

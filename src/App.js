@@ -36,7 +36,6 @@ function App() {
         <BrowserRouter>
 
           <Routes>
-
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />
               <Route path="/aboutUs" element={<AboutUs />} />
@@ -50,8 +49,8 @@ function App() {
 
             <Route element={<BookingLayout />}>
               <Route path="/booking/:id" element={<BookingDetails />} />
-              <Route path="/User" element={<UserDetails />} />
-              <Route path="/Payment" element={<Payment />} />
+              <Route path="/User/:id" element={<UserDetails />} />
+              <Route path="/Payment/:id" element={<Payment />} />
               <Route path="/OrderCompleted" element={<OrderCompleted />} />
             </Route>
 

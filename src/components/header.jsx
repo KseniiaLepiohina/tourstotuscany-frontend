@@ -1,10 +1,12 @@
+import { useState } from "react";
 import {  NavLink} from "react-router-dom";
 import logo from "../assets/home/logo.svg";
+import Login from "../pages/auth/Login";
 
 export default function Header() {
-// const [isOpen, setIsOpen] = useState(false);
-//   const [isCreateOpen, setIsCreateOpen] = useState(false);
-// const [isLoginOpen, setIsLoginOpen] = useState(false);
+const [isOpen, setIsOpen] = useState(false);
+  const [isCreateOpen, setIsCreateOpen] = useState(false);
+const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   //  const overlayRoutes = ["/", "/aboutUs"];
   // const isOverlay = overlayRoutes.includes(location.pathname);
@@ -19,10 +21,10 @@ export default function Header() {
       </NavLink>
         <section className="main_nav">
            <nav>
-            <li><a href="/"><strong>Home</strong></a></li>
-            <li><a href="/aboutUs"><strong>About us</strong></a> </li>
-            <li><a href="/Tours"><strong>Tours</strong></a></li>
-            <li><a href="/contact"><strong>Contact Us</strong></a></li>
+            <NavLink to="/"><li><strong>Home</strong></li></NavLink>
+            <NavLink to="/aboutUs"><li><strong>About us</strong></li></NavLink> 
+            <NavLink to="/Tours"><li><strong>Tours</strong></li></NavLink >
+            <NavLink to="/contact"><li><strong>Contact Us</strong></li></NavLink>
           </nav>
 
         <section className="header_options">
@@ -30,18 +32,23 @@ export default function Header() {
             <option>ENG</option>
             <option>UKR</option>
           </select>
-
-          <button
+    <NavLink to="/auth/login">
+      <button
+      onClick={() => setIsLoginOpen(true)}
           style={{
             background:"none",
             border:"none",
             cursor:'pointer'
-          }} > Login</button>
-          {/* // onClick={() => setIsLoginOpen(true)}>Login</button>onClick={() => setIsCreateOpen(true)} */}
-          
-          <button className="general_btn" >
+          }}> Login 
+      </button>
+    </NavLink>
+          <NavLink to="/auth/createAccount">
+          <button 
+          onClick={() => setIsCreateOpen(true)}
+          className="general_btn" >
             Sign Up
           </button>
+          </NavLink>
 
             {/* {currentUser ? ( 
             <AuthorizedHeader dispatch={dispatch} />
