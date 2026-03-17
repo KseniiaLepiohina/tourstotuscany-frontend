@@ -58,7 +58,7 @@ export default function NewPassword() {
           Your new password must be different from previously used passwords.
         </p>
 
-        <form onSubmit={handleSubmit} method="post" action="/auth/newPassword">
+        <form onSubmit={handleSubmit} >
           <label for="new_password">New Password</label>
           <section>
             <input
@@ -91,8 +91,8 @@ export default function NewPassword() {
           </section>
 
           <label for="confirm_password">Confirm Password</label>
-
-          <section>
+ <section>
+         
             <input
               type={showPassword ? "text" : "password"}
               onChange={(e) => dispatch(setConfirmPassword(e.target.value))}

@@ -28,9 +28,8 @@ const [forgotPassword, { isLoading }] = useForgotPasswordMutation();
       <section className="modal-content">
         <section className="modal-header">
           <section className="modal_icon">
-            <Icon icon="bx:key" width={24} height={24} color="FA8B02"/>
+            <Icon  className="form_img" icon="bx:key" width={24} height={24} color="#FA8B02"  aria-label="reset password"/>
           </section>
-          
         </section>
        <h1>Forgot Password</h1>
        <p>No worries, we'll send you reset instructions.</p>

@@ -13,6 +13,8 @@ const authSlice = createSlice({
     phoneNumber:"",
     newPassword:null,
     confirmPassword:null,
+    token:localStorage.getItem('token') || null,
+    isAuthenticated:!!localStorage.getItem('token'),
   },
   reducers: {
     setFirstName:(state,action)=> {
@@ -42,8 +44,25 @@ const authSlice = createSlice({
     setConfirmPassword:(state,action)=> {
       state.confirmPassword = action.payload;
     },
+    //GoogleAuth
+    setCredentials:(state,action) => {
+      state.token = action.payload;
+      state.isAuthenticated = true;
+      localStorage.setItem('token',action.payload);
+    },
+    logOut:(state)=> {
+      state.token =  null;
+      state.isAuthenticated = false;
+      localStorage.removeItem('token');
+      state.user = null;
+      state.email = "";
+      state.password = "";
+    }
   },
 });
 
-export const { setPassword, setEmail,setFirstName,setLastName, setFullName,setPhone,setConfirmPassword,setNewPassword } = authSlice.actions;
+export const { 
+  setPassword, setEmail,setFirstName,setLastName, setFullName,setPhone,setConfirmPassword,setNewPassword,setCredentials,setIsAuthenticated 
+,logOut
+} = authSlice.actions;
 export default authSlice.reducer;

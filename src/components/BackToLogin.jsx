@@ -19,6 +19,7 @@ const BackToLogin = () => {
                icon="bi:arrow-left"
                height="20"
                width="20"
+               color="#333333"
                />
                 <span color="#333333">Back to Login</span>
               </button>
