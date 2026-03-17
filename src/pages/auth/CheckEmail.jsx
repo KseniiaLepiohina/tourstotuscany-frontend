@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Icon } from '@iconify/react';
 import BackToLogin from '../../components/BackToLogin';
+import { useSelector } from "react-redux";
 
 export default function CheckEmail() {
-
-  const [isOpen, setIsOpen] = useState(true);
+  const email = useSelector((state) => state.auth.email);
   return (
     <section className="modal-overlay" >
       <section className="modal-content ">
@@ -18,18 +18,14 @@ export default function CheckEmail() {
             aria-label="check your email"
           />
         </section>
-
         <h1>Check your email</h1>
+        <p>We sent a password reset link to {email}</p>
+        <button className="general_btn" type="submit">
+          Open email app
+        </button>
+        <p> Didn't receive the email? Click to resend</p>
+        <BackToLogin />
       </section>
-
-      <p>We sent a password reset link to @loremipsum@gmail.com</p>
-      <button className="general_btn" type="submit">
-
-        Open email app
-      </button>
-      <p> Didn't receive the email? Click to resend</p>
-      <BackToLogin />
-
     </section>
   );
 }

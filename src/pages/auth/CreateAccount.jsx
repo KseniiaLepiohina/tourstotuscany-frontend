@@ -1,47 +1,40 @@
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setEmail, setPassword, setFullName} from "../../slices/authSlice";
 import { useSignUpMutation } from "../../services/authApi";
 import { toast } from "react-toastify";
+import CloseBtn from "../../components/closeBtn";
 
-export default function CreateAccount({ onClose }) {
+export default function CreateAccount() {
 
-  const {signUp,error} = useSignUpMutation();
+const [signUp, { isLoading, error: error }] = useSignUpMutation();
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { fullName, email, password } = useSelector(state => state.auth);
 
   const [showPassword, setShowPassword] = useState(false);
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await signUp({ fullName, email, password }).unwrap();
       toast.success("Account created successfully!");
-      onClose();
-    } catch (err) {
-      // Виводимо конкретне повідомлення в toast
-      toast.error(err.data?.message || "Check the sign up form");
+      navigate('/');
+    } catch (error) {
+      toast.error(error.data?.message || "Check the sign up form");
     }
   };
-
-  console.log("Error", error);
   
   return (
     <section className="modal-overlay ">
       <section className="modal-content">
         <section className="modal-header">
           <h2>Create Account</h2>
-          <button onClick={onClose} className="modal-close-btn">
-            <Icon icon="clarity:window-close-line" 
-            width={24} 
-            height={24}
-            color="#333333"
-            />
-          </button>
+         {/* <CloseBtn/> */}
         </section>
 
         <form onSubmit={handleSubmit}  className="modal-form">
@@ -79,24 +72,13 @@ export default function CreateAccount({ onClose }) {
           </span>
 
           </section>
-          <section>
-            <input
-            type="checkbox"
-            />
-            <label>
-              I agree with <span color="#FA8B02">Terms</span> and <span color="#FA8B02">Privacy</span>
-            </label>
+          <section className="panel_search_container">
+            <input type="checkbox" required/>
+             I agree with <p color="#FA8B02">Terms</p> and <p color="#FA8B02">Privacy</p> 
           </section>
-          
-          <section className="submit" >
             <button type="submit" className="general_btn ">Sign Up</button>
-          </section>
-          
-         
-          
-          {error && <p className="error">{error}</p>}
-        </form>
-        <section>
+{error && <p className="error">Error {error.status}: {JSON.stringify(error.data)}</p>}          
+<section>
              <span>or</span>
               <button
              className="btn_ggl_submit"
@@ -109,6 +91,8 @@ export default function CreateAccount({ onClose }) {
               <h4>Sign Up with Google</h4>
             </button>
           </section>
+        </form>
+       
       </section>
     </section>
   );

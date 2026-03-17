@@ -16,8 +16,14 @@ body {
 .btn_compl_order{
   border-radius: 3.125em;
   border-color: #FA8B02;
-  padding: 1em 2em;
+  /* padding: 1em 2em; */
   background-color:transparent;
+    height: 3em;
+    width: 15em;
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    text-align: center;
 }
 
 code {
@@ -71,7 +77,14 @@ nav li :hover {
   border-radius: 3.125em;
   background-color: #FA8B02;
   color: #FFFFFF;
-  padding: 0.5em 2em 0.5em 2em;
+    height: 3em;
+    width: 15em;
+    display: flex;
+    gap: 0.5em;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  /* padding: 0.5em 2em 0.5em 2em; */
 }
 .main_nav{
   display: flex;
@@ -1197,7 +1210,6 @@ justify-content: space-between;
     width: 15em;
     display: flex;
     gap: 0.5em;
-    /* padding:0.625em 1.5em;  */
     align-items: center;
     text-align: center;
     border-radius: 3em;

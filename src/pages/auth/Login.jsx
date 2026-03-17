@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { setEmail,setPassword } from "../../slices/authSlice";
 import { useSignInMutation } from "../../services/authApi";
+// import CloseBtn from "../../components/closeBtn";
 
 
-export default function Login({onClose}) {
-const [isOpen, setIsOpen] = useState(false);
-  const [isCreateOpen, setIsCreateOpen] = useState(false);
-const [isLoginOpen, setIsLoginOpen] = useState(false);
+export default function Login() {
+
+// const [isOpen, setIsOpen] = useState(false);
+//   const [isCreateOpen, setIsCreateOpen] = useState(false);
+// const [isLoginOpen, setIsLoginOpen] = useState(false);
 
   const [signIn] = useSignInMutation();
 
@@ -29,7 +31,7 @@ const {email, password} = useSelector((state)=> state.auth);
     try {
       await signIn({ email, password }).unwrap();
       toast.success("User logged in successfully");
-      onClose();
+      // onClose();
     } catch (err) {
       toast.error(err.data?.message || "Invalid credentials");
     }
@@ -40,9 +42,7 @@ const {email, password} = useSelector((state)=> state.auth);
       <section className="modal-content">
         <header className="modal-header">
           <h1>Login</h1>
-          <button aria-label="Close modal" onClick={onClose} className="modal-close-btn">
-            <Icon icon="clarity:window-close-line" width={24} height={24} role="img" />
-          </button>
+         {/* <CloseBtn/> */}
         </header>
 
         <form onSubmit={handleSubmit}  className="form">
