@@ -2,14 +2,13 @@ import { useState } from "react";
 import { NavLink, Link, useLocation } from "react-router-dom";
 import logo from "../assets/home/logo.svg";
 import { Icon } from "@iconify/react";
-import { logOut } from "../slices/authSlice"; // Видалив зайвий імпорт user
+import { logOut } from "../slices/authSlice"; 
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
   const location = useLocation();
   const dispatch = useDispatch();
   
-  // Отримуємо користувача зі стору
   const user = useSelector((state) => state.auth.user);
 
   const overlayRoutes = ["/", "/aboutUs"];
@@ -40,7 +39,7 @@ export default function Header() {
             <option>UKR</option>
           </select>
 
-          {/* ЛОГІКА: Якщо користувача НЕМАЄ (!user) — показуємо вхід */}
+         
           {!user ? (
             <>
               <NavLink to="/auth/login">
@@ -51,7 +50,6 @@ export default function Header() {
               </NavLink>
             </>
           ) : (
-            /* Якщо користувач Є — показуємо випадаюче меню */
             <AuthorizedHeader dispatch={dispatch} />
           )}
         </section>
@@ -60,7 +58,6 @@ export default function Header() {
   );
 }
 
-// Допоміжний компонент меню користувача
 export const AuthorizedHeader = ({ dispatch }) => {
   const [isOpen, setIsOpen] = useState(false);
   
