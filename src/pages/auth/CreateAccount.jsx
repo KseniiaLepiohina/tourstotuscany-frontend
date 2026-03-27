@@ -32,7 +32,6 @@ const [signUp] = useSignUpMutation();
       <section className="modal-content">
         <section className="modal-header">
           <h2>Create Account</h2>
-         {/* <CloseBtn/> */}
         </section>
 
         <form onSubmit={handleSubmit}  className="modal-form">
