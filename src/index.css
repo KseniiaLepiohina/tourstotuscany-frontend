@@ -16,7 +16,6 @@ body {
 .btn_compl_order{
   border-radius: 3.125em;
   border-color: #FA8B02;
-  /* padding: 1em 2em; */
   background-color:transparent;
     height: 3em;
     width: 15em;
@@ -35,6 +34,7 @@ code {
 /*HEADER*/
 header{
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   list-style-type: none;
   text-decoration: none;
@@ -60,9 +60,39 @@ nav {
   gap: 3.6em;
   color: #333333;
 }
-nav li :hover {
+.nav_wrapper{
+  display: flex;
+  align-items: center;
+  gap: 3em;
+}
+nav li ::before {
   text-decoration: underline;
   text-decoration-color: #FA8B02;
+}
+
+.burger_menu{
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+}
+.burger_menu span{
+  height: 0.4em;
+  width: 2em;
+      background-color: white;
+    margin: 4px 0;
+    transition: 0.3s;
+
+}
+.burger_menu.open span:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.burger_menu.open span:nth-child(2) {
+  opacity: 0; /* Hide the middle bar */
+}
+
+.burger_menu.open span:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
 }
 .header_options{
   display: flex;
@@ -1042,24 +1072,67 @@ grid-template-columns: repeat(7,1fr);
 grid-template-rows: repeat(7,1fr);
 cursor: pointer;
 }
-.datepicker-wrapper{
+.datepicker-wrapper {
   background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); 
+  border-radius: 8px;
+  overflow: hidden;
+  width: fit-content;
+  border: 1px solid #e0e0e0;
 }
 .datepicker-wrapper .calendar {
-width: 20em;
-height: 10em; 
+
+  display: flex;
+  flex-direction: column;
+  width: 16em; /* Зменшено з 20em */
+  padding: 10px;
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  font-size: 14px; 
+
 }
 
 .datepicker-wrapper .calendar-days{
 grid-template-columns: repeat(9,1fr);
 grid-template-rows: repeat(4,1fr);
 }
-.datepicker-wrapper .calendar-header .calendar-subheader{
-  width: 50%;
-  grid-template-columns: repeat(9,1fr);
-
+.datepicker-wrapper .calendar-header {
+height: 3em; 
+  width: 100%;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  padding: 0 5px;
+  box-sizing: border-box;
+}
+.datepicker-wrapper .calendar-subheader{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); 
+  text-align: center;
+  font-weight: bold;
+  color: #888;
+  margin-bottom: 5px;
+}
+.datepicker-wrapper .calendar-days{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  cursor: pointer;
+}
+.datepicker-wrapper .calendar-days span, 
+.calendar-days div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em; /* Квадратні комірки */
+  border-radius: 4px;
+  transition: 0.2s;
 }
 
+.datepicker-wrapper .calendar-days span:hover {
+  background-color: #f0f0f0;
+}
 /*Gallery*/
 .carousel_container{
   display: grid;
@@ -1246,9 +1319,48 @@ justify-content: space-between;
 
 
 @media (max-width:768px) {
-  header{
-    flex-direction: column;
+.burger_menu {
+    display: flex;
+    z-index: 1001; /* Бургер завжди зверху */
+    position: relative;
   }
+
+  .nav_wrapper {
+    display: none; /* Спочатку сховано */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.95); /* Колір меню */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    z-index: 1000;
+  }
+
+  .nav_wrapper.active {
+    display: flex;
+  }
+
+  nav {
+    flex-direction: column;
+    align-items: center;
+    gap: 2em;
+  }
+
+  nav li {
+    color: white; 
+    font-size: 1.5rem;
+  }
+
+  .header_options {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em;
+  }
+
   .ftr_service{
     display: flex;
     flex-direction: column;
@@ -1302,4 +1414,9 @@ flex-direction: column;
   .detail_container{
     margin: 0;
   }
+  .statistic{
+    display: flex;
+    flex-direction: column;
+  }
+  
 }

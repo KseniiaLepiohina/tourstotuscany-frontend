@@ -1,112 +1,11 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 import PhotoSwipeLightbox from "photoswipe/lightbox";
 import "photoswipe/style.css";
 import { useGetGalleryPhotosQuery } from "../services/tourApi";
 import Arrows from "../Carousels/arrows";
 
-// export const GalleryPlaces = () => {
-//   const { id } = useParams();
-//   const {data:galleryImages,isLoading,isError} = useGetGalleryPhotosQuery(id);
-
-//   useEffect(() => {
-//     let lightbox = new PhotoSwipeLightbox({
-//       gallery: "#carousel_container",
-//       children: "a.pswp-link",
-//       pswpModule: () => import("photoswipe"),
-//     });
-
-//     lightbox.init();
-
-//     return () => {
-//       lightbox.destroy();
-//       lightbox = null;
-//     };
-//   }, [galleryImages]);
-//   const handleDownloadTrigger = (downloadUrl) => {
-//     fetch(`${downloadUrl}&client_id=${process.env.REACT_APP_UNSPLASH_KEY}`);
-//   };
-//   if (isLoading) return <p>Loading...</p>;
-//   if (isError) return {isError}
-//   if (!galleryImages) return null;
-
-//   return (
-//     <section>
-//       <section className="carousel_header">
-//         <h3>Gallery</h3>
-//         <Arrows/>
-//       </section>
-
-//       <section
-//         id="carousel_container"
-//         style={{ display: "flex", gap: "1.4em" }}
-//         key={galleryImages.id}
-//       >
-//         <a
-//           href={galleryImages.image1_url}
-//           data-pswp-width="1400"
-//           data-pswp-height="933"
-//           target="_blank"
-//           rel="noreferrer"
-//         >
-//           <img
-//             style={{ width: "700px", height: "500px" }}
-//             src={galleryImages.image1_url}
-//             alt="place 1"
-//           />
-//         </a>
-
-//         <section
-//           style={{ display: "flex", flexDirection: "column", gap: "1.4em" }}
-//         >
-//           <a
-//             href={galleryImages.image2_url}
-//             data-pswp-width="1400"
-//             data-pswp-height="933"
-//             target="_blank"
-//             rel="noreferrer"
-//           >
-//             <img
-//               style={{ width: "340px", height: "202px" }}
-//               src={galleryImages.image2_url}
-//               alt="place 2"
-//             />
-//           </a>
-//           <a
-//             href={galleryImages.image3_url}
-//             data-pswp-width="1400"
-//             data-pswp-height="933"
-//             target="_blank"
-//             rel="noreferrer"
-//           >
-//             <img
-//               style={{ width: "340px", height: "202px" }}
-//               src={galleryImages.image3_url}
-//               alt="place 3"
-//             />
-//           </a>
-//         </section>
-
-//         <a
-//           href={galleryImages.image4_url}
-//           data-pswp-width="1400"
-//           data-pswp-height="933"
-//           target="_blank"
-//           rel="noreferrer"
-//         >
-//           <img
-//             style={{ width: "340px", height: "500px" }}
-//             src={galleryImages.image4_url}
-//             alt="place 4"
-//           />
-//         </a>
-//       </section>
-//     </section>
-//   );
-// };
-export const GalleryPlaces = ({location}) => {
-  // const { id } = useParams();
-  const { data: galleryData, isLoading, isError } = useGetGalleryPhotosQuery(location);
+export const GalleryPlaces = ({locationQuery}) => {
+  const { data: galleryData, isLoading, isError } = useGetGalleryPhotosQuery(locationQuery);
 
   useEffect(() => {
     let lightbox = new PhotoSwipeLightbox({
@@ -144,7 +43,7 @@ export const GalleryPlaces = ({location}) => {
   return (
     <section>
       <section className="carousel_header">
-        <h3>Gallery: {galleryData.location}</h3>
+        <h3>Gallery: {galleryData.locationQuery}</h3>
         <Arrows />
       </section>
 
@@ -171,15 +70,15 @@ export const GalleryPlaces = ({location}) => {
             </a>
             
             <div style={{ fontSize: "12px", marginTop: "5px" }}>
-              Photo by{" "}
+              Photo by
               <a 
                 href={`${photo.user.links.html}?utm_source=ToursToTuscany&utm_medium=referral`} 
                 target="_blank" 
                 rel="noreferrer"
               >
                 {photo.user.name}
-              </a>{" "}
-              on{" "}
+              </a>
+              on
               <a 
                 href="https://unsplash.com/?utm_source=ToursToTuscany&utm_medium=referral" 
                 target="_blank" 

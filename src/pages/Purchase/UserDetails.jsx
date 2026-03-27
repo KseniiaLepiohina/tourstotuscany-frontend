@@ -1,4 +1,4 @@
-import {  NavLink,useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import ProgressBar from "../../components/ProgressBar";
@@ -9,7 +9,6 @@ export default function UserDetails() {
   const {id} = useParams();
 
     const dispatch = useDispatch();
-const {selectedDate,selectedTime} = useSelector((state)=> state.datepicker);
 
     const firstName = useSelector((state) => state.auth.firstName);
     const lastName = useSelector((state) => state.auth.lastName);

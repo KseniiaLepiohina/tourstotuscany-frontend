@@ -15,7 +15,7 @@ import Statistic from "../components/statistic.jsx";
 
 import TuscanySlider from "../Carousels/tourPackages.jsx";
 import Reviews from "../Carousels/reviews.jsx";
-import TourPanel from "../components/TourPanel.jsx";
+// import TourPanel from "../components/TourPanel.jsx";
 import oneday from '../assets/svgs/One_day.svg';
 import map from '../assets/svgs/Map.svg';
 import discount from '../assets/svgs/Discount.svg';
@@ -39,7 +39,7 @@ export default function Home() {
             <h1> Enjoy in the best way!</h1>
             <h2> Enjoy our services for your trip anytime</h2>
           </section>
-          <TourPanel />
+          {/* <TourPanel /> */}
         </section>
       </section>
 
@@ -47,7 +47,7 @@ export default function Home() {
 
       <section className="introduction">
         <img src={about} alt="Welcome to our site" />
-        <section className="welcome_descrip">
+        <article className="welcome_descrip">
           <ul>
             <li>
               <p>WELCOME TO OUR SITE!</p>
@@ -69,7 +69,7 @@ export default function Home() {
             </li>
           </ul>
           <Statistic />
-        </section>
+        </article>
       </section>
 
       <section className="service_home">

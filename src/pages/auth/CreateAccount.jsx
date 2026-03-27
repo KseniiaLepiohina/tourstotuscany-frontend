@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
@@ -6,11 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEmail, setPassword, setFullName} from "../../slices/authSlice";
 import { useSignUpMutation } from "../../services/authApi";
 import { toast } from "react-toastify";
-import CloseBtn from "../../components/closeBtn";
 
 export default function CreateAccount() {
 
-const [signUp, { isLoading, error: error }] = useSignUpMutation();
+const [signUp] = useSignUpMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -28,7 +26,7 @@ const [signUp, { isLoading, error: error }] = useSignUpMutation();
       toast.error(error.data?.message || "Check the sign up form");
     }
   };
-  
+
   return (
     <section className="modal-overlay ">
       <section className="modal-content">
@@ -77,7 +75,7 @@ const [signUp, { isLoading, error: error }] = useSignUpMutation();
              I agree with <p color="#FA8B02">Terms</p> and <p color="#FA8B02">Privacy</p> 
           </section>
             <button type="submit" className="general_btn ">Sign Up</button>
-{error && <p className="error">Error {error.status}: {JSON.stringify(error.data)}</p>}          
+{/* {error && <p className="error">Error {error.status}: {JSON.stringify(error.data)}</p>}           */}
 <section>
              <span>or</span>
               <button

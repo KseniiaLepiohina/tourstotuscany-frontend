@@ -1,10 +1,8 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setTime} from "../slices/dateSlice";
 
 export default function TimePicker() {
   const dispatch = useDispatch();
-  const selectedTime = useSelector((state) => state.datepicker.selectedTime);
 
   const Time = [
     { id: 1, label: "13:00", value: new Date().setHours(13, 0, 0, 0) },

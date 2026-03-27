@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Icon } from "@iconify/react";
 import { setDate } from "../slices/dateSlice";
@@ -79,7 +79,6 @@ const DatePicker = ({onSelect})=> {
           </h3>
           <section>
             <button onClick={handlePrevMonth}>
-              {/* <img src={prev} alt="Previous Month" /> */}
                  <Icon icon="si:chevron-left-duotone" color="#333333" height={20} width={20} />
             </button>
             <button onClick={handleNextMonth}>
