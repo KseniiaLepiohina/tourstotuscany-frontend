@@ -1,5 +1,4 @@
 import  { useState } from "react";
-import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import visa from "../../assets/home/icons/Tours/visa.svg";
 import discover from "../../assets/home/icons/Tours/discover.svg";
@@ -11,10 +10,8 @@ import TicketOverview from "../../components/TicketOverview";
 import getTypeCard from "../../utils/CardType";
 import {setPaymentMethod,setCardValue} from "../../slices/paymentSlice";
 import { Icon } from "@iconify/react";
-import { NavLink } from "react-router-dom";
 
 export default function Payment({nextLink}) {
-  const {id} = useParams();
 
   const dispatch = useDispatch();
   const [selectedMethod, setSelectedMethod] = useState("");

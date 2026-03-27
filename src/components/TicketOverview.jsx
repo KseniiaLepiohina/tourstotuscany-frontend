@@ -2,7 +2,6 @@ import { NavLink, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Icon } from "@iconify/react";
 import { useGetMainImageQuery, useGetTourByIdQuery } from "../services/tourApi";
-import { selectedDate,selectedTime } from "../slices/dateSlice";
 
 export default function TicketOverview({ nextLink, onNext }) {
   const { id ,tour_id} = useParams(); 

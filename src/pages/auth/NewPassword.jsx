@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import ApprovedPassword from "./ApprovedPassword";
 import { useDispatch, useSelector } from "react-redux";
-import { setConfirmPassword, setNewPassword, updateUserPassword } from "../../slices/authSlice";
+import { setConfirmPassword, setNewPassword } from "../../slices/authSlice";
 import { toast } from "react-toastify";
 import { useUpdatePasswordMutation } from "../../services/authApi";
 import BackToLogin from "../../components/BackToLogin";
@@ -14,12 +14,11 @@ export default function NewPassword() {
   const dispatch = useDispatch();
   const { newPassword, confirmPassword } = useSelector((state) => state.auth);
   const { updatePassword, isLoading } = useUpdatePasswordMutation();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 1. Валідація ПЕРЕД запитом
     if (newPassword !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
@@ -34,7 +33,6 @@ export default function NewPassword() {
       toast.success("Password successfully updated");
       navigate("/auth/newPassword/approvedPassword"); 
     } catch (err) {
-      // Рендеримо текст помилки, а не об'єкт
       toast.error(err.data?.message || "Check the passwords");
     }
   };

@@ -32,7 +32,7 @@ export const tourApi = createApi({
       query: (id) => `/main-gallery/${id}`
     }),   
     getGalleryPhotos: builder.query({
-      query: (location) => `/gallery/search/${location}`
+      query: (locationQuery) => `/gallery/search/${encodeURIComponent(locationQuery)}`
     }),
   }),
 });

@@ -1,7 +1,9 @@
 import { Icon } from "@iconify/react";
 import Arrows from "./arrows";
-import { useGetAllToursQuery, useGetMainImageQuery } from "../services/tourApi";
+import { useGetAllToursQuery } from "../services/tourApi";
 import { useRef } from "react";
+import MainImg from '../components/Main_Img';
+
 
 const TourPackages = () => {
   const scrollRef = useRef();
@@ -37,7 +39,9 @@ const TourPackages = () => {
             <li>
              <section className="tours" key={item.id}>
               
-              <FindImg/>
+              <MainImg 
+              style={{ width: '50%', objectFit: 'cover',height:'50%' }}
+              id={item.id} />
               
               
               <h2>{item.title}</h2>
@@ -83,25 +87,4 @@ const TourPackages = () => {
 }
 
 export default TourPackages;
-
-const FindImg = ({ id, title }) => {
-  const numericId = Number(id);
-  console.log("id", numericId);
-
-  const { data: mainImg, isLoading } = useGetMainImageQuery(numericId, {
-    skip: !numericId || isNaN(numericId),
-  });
-
-  if (isLoading) return <div className="logo_tour_placeholder">...</div>;
-  if (!mainImg?.url) return null;
-
-  return (
-    <img 
-      className="logo_tour" 
-      src={mainImg.url} 
-      alt={title} 
-    />
-  );
-};
-
 

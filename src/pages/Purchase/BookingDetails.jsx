@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import ProgressBar from '../../components/ProgressBar';
 import TicketOverview from '../../components/TicketOverview';
 import { Icon } from "@iconify/react";
-import { selectedTime, selectedDate } from "../../slices/dateSlice";
 import {
     increaseAdultValue,
     decreaseAdultValue,
@@ -13,8 +12,7 @@ import {
     decreaseInfantValue,
   } from '../../slices/tourByIdSlice';
 import { useGetTourByIdQuery } from "../../services/tourApi";
-import DropDownDatePicker from "../../Picker/DropDownDatePicker";
-import TimePicker from "../../Picker/TimePicker";
+
 
 export default function BookingDetails() {
 const dispatch = useDispatch();

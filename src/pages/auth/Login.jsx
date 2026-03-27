@@ -1,5 +1,5 @@
 import  { useState } from "react";
-import {  NavLink } from "react-router-dom";
+import {  NavLink, useNavigate } from "react-router-dom";
 import { Icon } from '@iconify/react';
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
@@ -13,7 +13,7 @@ export default function Login() {
 // const [isOpen, setIsOpen] = useState(false);
 //   const [isCreateOpen, setIsCreateOpen] = useState(false);
 // const [isLoginOpen, setIsLoginOpen] = useState(false);
-
+const navigate = useNavigate();
   const [signIn] = useSignInMutation();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -29,7 +29,8 @@ const {email, password} = useSelector((state)=> state.auth);
       return;
     }
     try {
-      await signIn({ email, password }).unwrap();
+      await signIn({ email, password }).unwrap()
+      navigate('/');
       toast.success("User logged in successfully");
       // onClose();
     } catch (err) {
