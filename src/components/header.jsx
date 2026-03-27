@@ -50,7 +50,7 @@ export default function Header() {
             <option>UKR</option>
           </select>
 
-          {/* ЛОГІКА: Якщо користувача НЕМАЄ (!user) — показуємо вхід */}
+          
           {!user ? (
             <>
               <NavLink to="/auth/login">
