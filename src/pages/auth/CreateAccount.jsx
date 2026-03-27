@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEmail, setPassword, setFullName} from "../../slices/authSlice";
 import { useSignUpMutation } from "../../services/authApi";
 import { toast } from "react-toastify";
+import CloseBtn from "../../components/closeBtn";
 
 export default function CreateAccount() {
 
