@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setEmail, setPassword, setFullName} from "../../slices/authSlice";
 import { useSignUpMutation } from "../../services/authApi";
 import { toast } from "react-toastify";
-import CloseBtn from "../../components/closeBtn";
 
 export default function CreateAccount() {
 
@@ -33,7 +32,6 @@ const [signUp] = useSignUpMutation();
       <section className="modal-content">
         <section className="modal-header">
           <h2>Create Account</h2>
-         {/* <CloseBtn/> */}
         </section>
 
         <form onSubmit={handleSubmit}  className="modal-form">
